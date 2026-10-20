@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "alchemicallaser:block/laser_emitter",
+      "y": 0
+    },
+    "facing=east": {
+      "model": "alchemicallaser:block/laser_emitter",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "alchemicallaser:block/laser_emitter",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "alchemicallaser:block/laser_emitter",
+      "y": 270
+    }
+  }
+}

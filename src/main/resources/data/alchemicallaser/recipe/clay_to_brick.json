@@ -1,0 +1,12 @@
+{
+  "type": "alchemicallaser:laser_processing",
+  "ingredient": {
+    "item": "minecraft:clay_ball"
+  },
+  "lens": "alchemicallaser:red_lens",
+  "result": {
+    "id": "minecraft:brick"
+  },
+  "duration": 80,
+  "minimum_rpm": 16
+}

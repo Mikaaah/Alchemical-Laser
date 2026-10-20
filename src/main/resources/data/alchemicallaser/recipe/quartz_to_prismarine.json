@@ -1,0 +1,12 @@
+{
+  "type": "alchemicallaser:laser_processing",
+  "ingredient": {
+    "item": "minecraft:quartz"
+  },
+  "lens": "alchemicallaser:white_lens",
+  "result": {
+    "id": "minecraft:prismarine_crystals"
+  },
+  "duration": 180,
+  "minimum_rpm": 16
+}

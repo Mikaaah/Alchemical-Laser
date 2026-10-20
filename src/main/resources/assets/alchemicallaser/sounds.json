@@ -1,0 +1,65 @@
+{
+  "lens_install": {
+    "subtitle": "subtitles.alchemicallaser.lens_install",
+    "sounds": [
+      {
+        "name": "alchemicallaser:lens_install",
+        "attenuation_distance": 12
+      }
+    ]
+  },
+  "activation": {
+    "subtitle": "subtitles.alchemicallaser.activation",
+    "sounds": [
+      {
+        "name": "alchemicallaser:activation",
+        "attenuation_distance": 12
+      }
+    ]
+  },
+  "charge": {
+    "subtitle": "subtitles.alchemicallaser.charge",
+    "sounds": [
+      {
+        "name": "alchemicallaser:charge",
+        "attenuation_distance": 12
+      }
+    ]
+  },
+  "fire": {
+    "subtitle": "subtitles.alchemicallaser.fire",
+    "sounds": [
+      {
+        "name": "alchemicallaser:fire",
+        "attenuation_distance": 12
+      }
+    ]
+  },
+  "beam": {
+    "subtitle": "subtitles.alchemicallaser.beam",
+    "sounds": [
+      {
+        "name": "alchemicallaser:beam",
+        "attenuation_distance": 12
+      }
+    ]
+  },
+  "complete": {
+    "subtitle": "subtitles.alchemicallaser.complete",
+    "sounds": [
+      {
+        "name": "alchemicallaser:complete",
+        "attenuation_distance": 12
+      }
+    ]
+  },
+  "shutdown": {
+    "subtitle": "subtitles.alchemicallaser.shutdown",
+    "sounds": [
+      {
+        "name": "alchemicallaser:shutdown",
+        "attenuation_distance": 12
+      }
+    ]
+  }
+}

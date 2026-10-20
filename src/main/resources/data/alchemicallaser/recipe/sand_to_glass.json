@@ -1,0 +1,12 @@
+{
+  "type": "alchemicallaser:laser_processing",
+  "ingredient": {
+    "item": "minecraft:sand"
+  },
+  "lens": "alchemicallaser:red_lens",
+  "result": {
+    "id": "minecraft:glass"
+  },
+  "duration": 100,
+  "minimum_rpm": 16
+}

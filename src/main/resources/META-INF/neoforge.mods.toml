@@ -1,0 +1,28 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="All Rights Reserved"
+[[mods]]
+modId="alchemicallaser"
+version="0.1.0"
+displayName="Create: Alchemical Lasers"
+authors="Mikaaah"
+displayURL="https://github.com/Mikaaah/Alchemical-Laser"
+description='''Kinetic laser processing for Create belts and Depots. Four reusable lenses, data-driven recipes and interactive Ponder tutorials.'''
+[[dependencies.alchemicallaser]]
+modId="neoforge"
+type="required"
+versionRange="[21.1.219,)"
+ordering="NONE"
+side="BOTH"
+[[dependencies.alchemicallaser]]
+modId="minecraft"
+type="required"
+versionRange="[1.21.1]"
+ordering="NONE"
+side="BOTH"
+[[dependencies.alchemicallaser]]
+modId="create"
+type="required"
+versionRange="[6.0.10,6.1)"
+ordering="AFTER"
+side="BOTH"

@@ -1,4 +1,6 @@
 # Alchemical Laser — Development Plan
+
+Implementation status is recorded below. Checked implementation tasks mean source/assets are present; unperformed release checks remain unchecked. See `CHANGELOG.md` for exact validation evidence.
 **Minecraft:** 1.21.1  
 **Mod Loader:** NeoForge  
 **Required Dependency:** Create 6.x  
@@ -364,60 +366,60 @@ Demonstrate activating and disabling the laser using redstone signals.
 
 ### Phase 1 — Foundation
 
-- [ ] Set up NeoForge 1.21.1 project.
-- [ ] Add Create as a required dependency.
-- [ ] Register Laser Emitter block and block entity.
-- [ ] Implement kinetic power consumption.
-- [ ] Implement initial mechanical model.
+- [x] Set up NeoForge 1.21.1 project.
+- [x] Add Create as a required dependency.
+- [x] Register Laser Emitter block and block entity.
+- [x] Implement kinetic power consumption.
+- [x] Implement initial mechanical model.
 
 ### Phase 2 — Processing System
 
-- [ ] Implement custom recipe type.
-- [ ] Integrate belt processing.
-- [ ] Implement Depot processing.
-- [ ] Implement input/output handling.
-- [ ] Implement recipe progress and interruption handling.
+- [x] Implement custom recipe type.
+- [x] Integrate belt processing.
+- [x] Implement Depot processing.
+- [x] Implement input/output handling.
+- [x] Implement recipe progress and interruption handling.
 - [ ] Validate multiplayer synchronization.
 
 ### Phase 3 — Lens System
 
-- [ ] Register the four lenses.
-- [ ] Implement installation and removal.
-- [ ] Implement lens-specific recipe filtering.
-- [ ] Implement lens visualization.
-- [ ] Implement data-driven lens settings.
+- [x] Register the four lenses.
+- [x] Implement installation and removal.
+- [x] Implement lens-specific recipe filtering.
+- [x] Implement lens visualization.
+- [x] Implement data-driven lens settings.
 
 ### Phase 4 — Visual and Audio Polish
 
-- [ ] Create final block and item textures.
-- [ ] Implement mechanical animations.
-- [ ] Implement animated laser beam.
-- [ ] Create custom particle effects.
-- [ ] Create custom sound assets.
-- [ ] Implement dynamic audio behavior.
+- [x] Create final block and item textures.
+- [x] Implement mechanical animations.
+- [x] Implement animated laser beam.
+- [x] Create custom particle effects.
+- [x] Create custom sound assets.
+- [x] Implement dynamic audio behavior.
 - [ ] Optimize client-side rendering.
 
 ### Phase 5 — Create Integration
 
-- [ ] Implement Engineer's Goggles information.
-- [ ] Implement redstone control.
-- [ ] Add JEI/EMI recipe categories.
+- [x] Implement Engineer's Goggles information.
+- [x] Implement redstone control.
+- [x] Add JEI/EMI recipe categories.
 - [ ] Validate KubeJS/datapack compatibility.
-- [ ] Implement the six Ponder scenes.
+- [x] Implement the six Ponder scenes.
 
 ### Phase 6 — Testing and Release
 
-- [ ] Test all processing speeds.
-- [ ] Test individual and stacked items.
-- [ ] Test belt direction and Depot compatibility.
+- [x] Test all processing speeds.
+- [x] Test individual and stacked items.
+- [x] Test belt direction and Depot compatibility.
 - [ ] Test multiple lasers operating simultaneously.
-- [ ] Test interrupted recipes and power loss.
+- [x] Test interrupted recipes and power loss.
 - [ ] Test chunk unloading and world reloads.
-- [ ] Test dedicated multiplayer servers.
+- [x] Test dedicated multiplayer servers.
 - [ ] Test compatibility with other Create machinery.
 - [ ] Verify sounds and effects clean up correctly.
 - [ ] Verify all Ponder scenes and recipe displays.
-- [ ] Build release JAR.
+- [x] Build release JAR.
 - [ ] Prepare CurseForge description and changelog.
 
 ## 11. Release Requirements

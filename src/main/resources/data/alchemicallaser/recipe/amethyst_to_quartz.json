@@ -1,0 +1,12 @@
+{
+  "type": "alchemicallaser:laser_processing",
+  "ingredient": {
+    "item": "minecraft:amethyst_shard"
+  },
+  "lens": "alchemicallaser:purple_lens",
+  "result": {
+    "id": "minecraft:quartz"
+  },
+  "duration": 120,
+  "minimum_rpm": 16
+}

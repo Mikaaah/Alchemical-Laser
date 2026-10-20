@@ -1,0 +1,12 @@
+{
+  "type": "alchemicallaser:laser_processing",
+  "ingredient": {
+    "item": "minecraft:magma_block"
+  },
+  "lens": "alchemicallaser:blue_lens",
+  "result": {
+    "id": "minecraft:obsidian"
+  },
+  "duration": 160,
+  "minimum_rpm": 16
+}

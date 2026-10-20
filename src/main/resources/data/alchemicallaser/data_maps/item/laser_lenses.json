@@ -1,0 +1,20 @@
+{
+  "values": {
+    "alchemicallaser:red_lens": {
+      "color": 16733008,
+      "pitch": 0.8
+    },
+    "alchemicallaser:blue_lens": {
+      "color": 4770559,
+      "pitch": 1.2
+    },
+    "alchemicallaser:purple_lens": {
+      "color": 12348671,
+      "pitch": 0.95
+    },
+    "alchemicallaser:white_lens": {
+      "color": 16774085,
+      "pitch": 1.05
+    }
+  }
+}
