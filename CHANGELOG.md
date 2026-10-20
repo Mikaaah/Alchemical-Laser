@@ -2,6 +2,8 @@
 
 ## 0.1.0
 
+- Apply supplied branding: GitHub banner and in-game mod information logo.
+
 First implementation of Create: Alchemical Lasers for NeoForge 1.21.1.
 
 - Added the kinetic Laser Emitter, four reusable optical lenses and survival crafting recipes.

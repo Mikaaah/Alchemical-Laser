@@ -5,6 +5,7 @@ license="All Rights Reserved"
 modId="alchemicallaser"
 version="0.1.0"
 displayName="Create: Alchemical Lasers"
+logoFile="logo.png"
 authors="Mikaaah"
 displayURL="https://github.com/Mikaaah/Alchemical-Laser"
 description='''Kinetic laser processing for Create belts and Depots. Four reusable lenses, data-driven recipes and interactive Ponder tutorials.'''

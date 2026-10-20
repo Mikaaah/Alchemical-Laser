@@ -1,4 +1,4 @@
-# Create: Alchemical Lasers
+![Create: Alchemical Lasers](docs/branding/banner.png)
 
 Kinetic laser processing for **Minecraft 1.21.1 • NeoForge • Create 6.0.10**.
 
