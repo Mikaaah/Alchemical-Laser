@@ -1,5 +1,5 @@
 {
-  "credit": "Create Deco lantern adaptation and Create rotation speed controller top geometry. See THIRD_PARTY_NOTICES.md.",
+  "credit": "Create Deco lantern adaptation with brass side-drive housing. See THIRD_PARTY_NOTICES.md.",
   "parent": "minecraft:block/block",
   "render_type": "minecraft:cutout_mipped",
   "textures": {
@@ -7,6 +7,7 @@
     "industrial": "alchemicallaser:block/deco_industrial_cage",
     "brass": "alchemicallaser:block/deco_brass_cage",
     "lamp": "alchemicallaser:block/deco_lamp_core",
+    "drive": "create:block/brass_block",
     "particle": "alchemicallaser:block/deco_industrial_cage"
   },
   "elements": [
@@ -2422,6 +2423,696 @@
             6,
             16,
             8
+          ]
+        }
+      }
+    },
+    {
+      "name": "brass_drive_housing",
+      "from": [
+        2,
+        6,
+        2
+      ],
+      "to": [
+        14,
+        14,
+        14
+      ],
+      "faces": {
+        "north": {
+          "texture": "#drive",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#drive",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#drive",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#drive",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "up": {
+          "texture": "#drive",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "down": {
+          "texture": "#drive",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      }
+    },
+    {
+      "name": "brass_top_plate",
+      "from": [
+        1,
+        14,
+        1
+      ],
+      "to": [
+        15,
+        15,
+        15
+      ],
+      "faces": {
+        "north": {
+          "texture": "#drive",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "east": {
+          "texture": "#drive",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "south": {
+          "texture": "#drive",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "west": {
+          "texture": "#drive",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "up": {
+          "texture": "#drive",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        },
+        "down": {
+          "texture": "#drive",
+          "uv": [
+            0,
+            0,
+            16,
+            16
+          ]
+        }
+      }
+    },
+    {
+      "name": "shaft_bearing",
+      "from": [
+        5,
+        5,
+        1.5
+      ],
+      "to": [
+        11,
+        6,
+        2.25
+      ],
+      "faces": {
+        "north": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        },
+        "east": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        },
+        "south": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        },
+        "west": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        },
+        "up": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        },
+        "down": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        }
+      }
+    },
+    {
+      "name": "shaft_bearing",
+      "from": [
+        5,
+        10,
+        1.5
+      ],
+      "to": [
+        11,
+        11,
+        2.25
+      ],
+      "faces": {
+        "north": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        },
+        "east": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        },
+        "south": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        },
+        "west": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        },
+        "up": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        },
+        "down": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        }
+      }
+    },
+    {
+      "name": "shaft_bearing",
+      "from": [
+        5,
+        6,
+        1.5
+      ],
+      "to": [
+        6,
+        10,
+        2.25
+      ],
+      "faces": {
+        "north": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        },
+        "east": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        },
+        "south": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        },
+        "west": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        },
+        "up": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        },
+        "down": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        }
+      }
+    },
+    {
+      "name": "shaft_bearing",
+      "from": [
+        10,
+        6,
+        1.5
+      ],
+      "to": [
+        11,
+        10,
+        2.25
+      ],
+      "faces": {
+        "north": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        },
+        "east": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        },
+        "south": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        },
+        "west": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        },
+        "up": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        },
+        "down": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        }
+      }
+    },
+    {
+      "name": "shaft_bearing",
+      "from": [
+        5,
+        5,
+        13.75
+      ],
+      "to": [
+        11,
+        6,
+        14.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        },
+        "east": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        },
+        "south": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        },
+        "west": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        },
+        "up": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        },
+        "down": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        }
+      }
+    },
+    {
+      "name": "shaft_bearing",
+      "from": [
+        5,
+        10,
+        13.75
+      ],
+      "to": [
+        11,
+        11,
+        14.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        },
+        "east": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        },
+        "south": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        },
+        "west": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        },
+        "up": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        },
+        "down": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        }
+      }
+    },
+    {
+      "name": "shaft_bearing",
+      "from": [
+        5,
+        6,
+        13.75
+      ],
+      "to": [
+        6,
+        10,
+        14.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        },
+        "east": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        },
+        "south": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        },
+        "west": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        },
+        "up": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        },
+        "down": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        }
+      }
+    },
+    {
+      "name": "shaft_bearing",
+      "from": [
+        10,
+        6,
+        13.75
+      ],
+      "to": [
+        11,
+        10,
+        14.5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        },
+        "east": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        },
+        "south": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        },
+        "west": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        },
+        "up": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
+          ]
+        },
+        "down": {
+          "texture": "#industrial",
+          "uv": [
+            10,
+            0,
+            16,
+            6
           ]
         }
       }

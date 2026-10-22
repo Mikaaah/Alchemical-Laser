@@ -27,7 +27,7 @@
   "alchemicallaser.ponder.laser_setup.header": "Setting up an Alchemical Laser",
   "alchemicallaser.ponder.laser_setup.text_1": "Place the emitter above a horizontal belt, leaving one air block between them, just like a Mechanical Press.",
   "alchemicallaser.ponder.laser_setup.text_2": "A Depot works at the same height. Funnels and hoppers can supply and extract items.",
-  "alchemicallaser.ponder.laser_setup.text_3": "Place a large cogwheel directly above the emitter, with its axle across the top channel, like a Rotation Speed Controller.",
+  "alchemicallaser.ponder.laser_setup.text_3": "Connect a shaft to either exposed end of the horizontal axle. Use a wrench to rotate the emitter and align the shaft.",
   "alchemicallaser.ponder.laser_power.header": "Power and processing speed",
   "alchemicallaser.ponder.laser_power.text_1": "The default minimum speed is 16 RPM. Individual recipes can require a higher speed.",
   "alchemicallaser.ponder.laser_power.text_2": "Recipe durations are measured at 32 RPM. The laser always draws stress from the network while connected.",

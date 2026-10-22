@@ -2,7 +2,7 @@ plugins {
     id 'java-library'
     id 'net.neoforged.moddev' version '2.0.148'
 }
-version = '0.2.1'
+version = '0.2.2'
 group = 'nl.mikaaah.alchemicallaser'
 base { archivesName = 'create-alchemical-lasers' }
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
@@ -37,16 +37,3 @@ dependencies {
 }
 tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
 tasks.named('processResources') { from('THIRD_PARTY_NOTICES.md') }
-sourceSets {
-    modelCheck {
-        compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
-        runtimeClasspath += output + compileClasspath + sourceSets.main.runtimeClasspath
-    }
-}
-tasks.register('checkControllerModel', JavaExec) {
-    dependsOn tasks.named('modelCheckClasses')
-    classpath = sourceSets.modelCheck.runtimeClasspath
-    mainClass = 'nl.mikaaah.alchemicallaser.client.ControllerModelCheck'
-    javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(21) }
-}
-tasks.named('check') { dependsOn tasks.named('checkControllerModel') }

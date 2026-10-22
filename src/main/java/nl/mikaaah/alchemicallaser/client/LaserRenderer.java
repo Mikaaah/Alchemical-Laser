@@ -13,7 +13,7 @@ import nl.mikaaah.alchemicallaser.*;
 public class LaserRenderer extends KineticBlockEntityRenderer<LaserBlockEntity> {
     public LaserRenderer(BlockEntityRendererProvider.Context context) { super(context); }
     @Override protected void renderSafe(LaserBlockEntity be, float partial, PoseStack pose, MultiBufferSource buffer, int light, int overlay) {
-        // Native controller-style horizontal friction roller, driven by the cog above.
+        // Horizontal drive shaft accepts ordinary side connections at either end.
         renderRotatingKineticBlock(be, shaft(getRotationAxisOf(be)), pose, buffer.getBuffer(RenderType.solid()), light);
         float time = be.getLevel().getGameTime() + partial;
         if (!be.lens().isEmpty()) {

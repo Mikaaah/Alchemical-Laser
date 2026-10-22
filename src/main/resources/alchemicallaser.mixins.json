@@ -1,7 +1,0 @@
-{
-  "required": true,
-  "package": "nl.mikaaah.alchemicallaser.mixin",
-  "compatibilityLevel": "JAVA_21",
-  "mixins": ["RotationPropagatorMixin"],
-  "injectors": {"defaultRequire": 1}
-}

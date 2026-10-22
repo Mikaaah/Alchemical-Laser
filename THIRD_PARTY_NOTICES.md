@@ -17,11 +17,11 @@ by Mikaaah for this mod. Their original authors retain all rights. This reposito
 license does not relicense those assets or grant permission to reuse them elsewhere.
 Create Deco is not required at runtime; no Create Deco code is bundled.
 
-# Create controller fittings
+# Referenced Create materials
 
 Copyright (c) The Create Team / The Creators of Create.
 
-The upper rails and textures are referenced from Create’s installed, baked Rotation Speed Controller model at client model bake time. The horizontal roller and large cogwheel also use Create’s own runtime models. No Create model JSON, textures or original Java code are redistributed by this addon. The render selects only the upper rails and combines their baked quads with the lantern body, including in inventory and after resource reload.
+The brass housing references `create:block/brass_block`; the rotating horizontal shaft uses Create’s own runtime shaft model. No Create textures, model JSON or original Java code are redistributed by this addon. The controller model import and special cog connection from 0.2.1 have been removed.
 
 Source project and asset license: https://github.com/Creators-of-Create/Create/blob/mc1.21.1/dev/LICENSE.md
 

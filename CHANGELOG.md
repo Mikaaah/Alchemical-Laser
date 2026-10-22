@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.2.2
+
+- Replaced the controller top with a compact solid brass housing, matching the retained industrial lantern. Added steel collars around the existing horizontal axle.
+- Restored ordinary Create shaft power from either end of the horizontal axle, including wrench rotation and both horizontal axes. Removed the overhead cog connection, custom kinetic mixin and controller model wrapper.
+- Kept the lantern position, nine lenses, processing recipes, sounds and beam behavior. Updated the Ponder shaft layout, setup instructions and preview.
+
+### Verification
+
+The build and all 26 dedicated-server GameTests passed, including both side inputs, a rotated emitter, rejection of vertical shafts and the removed overhead cog drive, all five specialist lenses, belt/Depot processing, speed limits, redstone and item conservation. Resource validation passed. The preview uses actual model geometry/textures; graphical-client review remains manual.
+
 ## 0.2.1
 
 - Kept the industrial lantern optics and replaced the andesite top cap with Create’s native Rotation Speed Controller top fittings, referenced directly from its baked model. No Create model or textures are bundled.

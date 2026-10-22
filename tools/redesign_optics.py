@@ -60,20 +60,24 @@ ring(elements, 'lower_optical_band', 3.5, 9, 5.5, .75, 'brass', [10,6,16,8])
 ring(elements, 'nozzle_collar', 2.5, 7.5, 4.5, 1, 'industrial', [10,6,16,8])
 ring(elements, 'nozzle_lip', 1.25, 6.75, 4.5, 1.25, 'brass', [10,6,16,8])
 ring(elements, 'lens_seat', .75, 6.5, 4.5, .5, 'industrial', [10,6,16,8])
-# Keep the lantern's geometry intact and hang it six pixels lower, leaving
-# Create's original top rail/roller/cog contact dimensions unchanged.
+# Keep the established lantern geometry and its hanging position intact.
 for e in elements:
     e['from'][1] -= 6
     e['to'][1] -= 6
 ring(elements, 'controller_lantern_coupling', 6, 8, 4, 2, 'brass', [10,6,16,8])
-# ClientSetup adds Create's baked top rails at model bake time. Keep those
-# native assets in the Create dependency instead of copying them into this mod.
-model = {'credit': 'Create Deco lantern adaptation and Create rotation speed controller top geometry. See THIRD_PARTY_NOTICES.md.',
+# Compact brass housing around the existing horizontal shaft, with steel collars.
+elements.append(cube('brass_drive_housing',[2,6,2],[14,14,14],'drive'))
+elements.append(cube('brass_top_plate',[1,14,1],[15,15,15],'drive'))
+for z,Z in [(1.5,2.25),(13.75,14.5)]:
+    for lo,hi in [([5,5,z],[11,6,Z]),([5,10,z],[11,11,Z]),([5,6,z],[6,10,Z]),([10,6,z],[11,10,Z])]:
+        elements.append(cube('shaft_bearing',lo,hi,'industrial',[10,0,16,6]))
+model = {'credit': 'Create Deco lantern adaptation with brass side-drive housing. See THIRD_PARTY_NOTICES.md.',
          'parent': 'minecraft:block/block', 'render_type': 'minecraft:cutout_mipped',
          'textures': {'cage': 'alchemicallaser:block/deco_industrial_cage',
                       'industrial': 'alchemicallaser:block/deco_industrial_cage',
                       'brass': 'alchemicallaser:block/deco_brass_cage',
                       'lamp': 'alchemicallaser:block/deco_lamp_core',
+                      'drive': 'create:block/brass_block',
 
                       'particle': 'alchemicallaser:block/deco_industrial_cage'},
          'elements': elements,
@@ -182,14 +186,14 @@ for name,src,count,out,amount,lens,duration,rpm in examples:
        'ingredient':{'item':'minecraft:'+src}, 'input_count':count, 'lens':f'alchemicallaser:{lens}_lens',
        'result':{'id':'minecraft:'+out,'count':amount}, 'duration':duration,'minimum_rpm':rpm})
 
-# Replace the tutorial drive above each emitter with a horizontal large cog.
+# Move tutorial drive shafts beside the emitters, along their horizontal Z axes.
 p = A/'ponder/laser_workshop.nbt'; structure = n.load(p)
 for b in structure['blocks']:
     state = structure['palette'][int(b['state'])]
     if str(state['Name']) in ['create:shaft','create:large_cogwheel']:
-        state['Name']=n.String('create:large_cogwheel')
-        state['Properties']['axis'] = n.String('x')
-        b['pos'][1] = n.Int(4); b['pos'][2] = n.Int(3)
-        if 'nbt' in b: b['nbt']['id']=n.String('create:large_cogwheel')
+        state['Name']=n.String('create:shaft')
+        state['Properties']['axis'] = n.String('z')
+        b['pos'][1] = n.Int(3); b['pos'][2] = n.Int(4)
+        if 'nbt' in b: b['nbt']['id']=n.String('create:shaft')
 structure.save(p)
-print('Rebuilt controller-top lantern laser, nine optics and overhead large-cog Ponder drive.')
+print('Rebuilt brass side-drive laser, nine optics and side-shaft Ponder setup.')

@@ -15,12 +15,11 @@ import nl.mikaaah.alchemicallaser.*;
 @GameTestHolder(AlchemicalLaser.ID)
 @PrefixGameTestTemplate(false)
 public class LaserGameTests {
-    private static final BlockPos EMITTER = new BlockPos(2,3,2), DEPOT = new BlockPos(2,1,2), COG = new BlockPos(2,4,2), MOTOR = new BlockPos(3,4,2);
+    private static final BlockPos EMITTER = new BlockPos(2,3,2), DEPOT = new BlockPos(2,1,2), MOTOR = new BlockPos(2,3,3);
     private static LaserBlockEntity setup(GameTestHelper h, String lens, int count) {
         h.setBlock(DEPOT,AllBlocks.DEPOT.getDefaultState());
         h.setBlock(EMITTER,AlchemicalLaser.EMITTER.get().defaultBlockState());
-        h.setBlock(COG,AllBlocks.LARGE_COGWHEEL.getDefaultState().setValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.AXIS,Direction.Axis.X));
-        h.setBlock(MOTOR,AllBlocks.CREATIVE_MOTOR.getDefaultState().setValue(DirectionalKineticBlock.FACING,Direction.WEST));
+        h.setBlock(MOTOR,AllBlocks.CREATIVE_MOTOR.getDefaultState().setValue(DirectionalKineticBlock.FACING,Direction.NORTH));
         var motor=(CreativeMotorBlockEntity)h.getBlockEntity(MOTOR);motor.generatedSpeed.setValue(32);motor.updateGeneratedRotation();
         var be=(LaserBlockEntity)h.getBlockEntity(EMITTER);be.exchangeLens(AlchemicalLaser.LENSES.get(lens).toStack());
         var depot=(DepotBlockEntity)h.getBlockEntity(DEPOT);
@@ -113,8 +112,7 @@ public class LaserGameTests {
     }
     private static void beltTest(GameTestHelper h,int rpm) {
         h.setBlock(EMITTER,AlchemicalLaser.EMITTER.get().defaultBlockState());
-        h.setBlock(COG,AllBlocks.LARGE_COGWHEEL.getDefaultState().setValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.AXIS,Direction.Axis.X));
-        h.setBlock(MOTOR,AllBlocks.CREATIVE_MOTOR.getDefaultState().setValue(DirectionalKineticBlock.FACING,Direction.WEST));
+        h.setBlock(MOTOR,AllBlocks.CREATIVE_MOTOR.getDefaultState().setValue(DirectionalKineticBlock.FACING,Direction.NORTH));
         var power=(CreativeMotorBlockEntity)h.getBlockEntity(MOTOR);power.generatedSpeed.setValue(32);power.updateGeneratedRotation();
         ((LaserBlockEntity)h.getBlockEntity(EMITTER)).exchangeLens(AlchemicalLaser.LENSES.get("red").toStack());
         BlockPos start=new BlockPos(0,1,2),end=new BlockPos(4,1,2),drive=new BlockPos(0,1,3);
@@ -169,17 +167,17 @@ public class LaserGameTests {
         });
     }
     @GameTest(template="empty",timeoutTicks=100)
-    public static void acceptsOnlyOverheadLargeCog(GameTestHelper h) {
+    public static void acceptsOnlyAlignedSideShafts(GameTestHelper h) {
         var be=setup(h,"red",1);
         var block=AlchemicalLaser.EMITTER.get();
         var state=h.getBlockState(EMITTER);
-        h.assertTrue(block.getRotationAxis(state)==Direction.Axis.Z,"Native top roller must rotate horizontally");
+        h.assertTrue(block.getRotationAxis(state)==Direction.Axis.Z,"Drive shaft must rotate horizontally");
         for(Direction face:Direction.values()) {
-            h.assertTrue(!block.hasShaftTowards(h.getLevel(),h.absolutePos(EMITTER),state,face),
+            h.assertTrue(block.hasShaftTowards(h.getLevel(),h.absolutePos(EMITTER),state,face)==(face.getAxis()==Direction.Axis.Z),
                 "Unexpected shaft connection on "+face);
         }
         h.runAfterDelay(20,() -> {
-            h.assertTrue(Math.abs(be.getSpeed())==32,"Overhead cog did not drive emitter"); h.succeed();
+            h.assertTrue(Math.abs(be.getSpeed())==32,"Side shaft did not drive emitter"); h.succeed();
         });
     }
     private static void specialistTest(GameTestHelper h,String lens,Item input,int count,Item output,int amount,int rpm) {
@@ -217,52 +215,43 @@ public class LaserGameTests {
     }
     @GameTest(template="empty",timeoutTicks=120)
     public static void verticalShaftCannotDriveLaser(GameTestHelper h) {
-        setup(h,"red",1);
-        h.setBlock(COG,AllBlocks.SHAFT.getDefaultState().setValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.AXIS,Direction.Axis.Y));
-        h.setBlock(COG.above(),AllBlocks.CREATIVE_MOTOR.getDefaultState().setValue(DirectionalKineticBlock.FACING,Direction.DOWN));
-        var motor=(CreativeMotorBlockEntity)h.getBlockEntity(COG.above());motor.generatedSpeed.setValue(32);motor.updateGeneratedRotation();
+        setup(h,"red",1);h.setBlock(MOTOR,Blocks.AIR);
+        var above=EMITTER.above();
+        h.setBlock(above,AllBlocks.SHAFT.getDefaultState().setValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.AXIS,Direction.Axis.Y));
+        h.setBlock(above.above(),AllBlocks.CREATIVE_MOTOR.getDefaultState().setValue(DirectionalKineticBlock.FACING,Direction.DOWN));
+        var motor=(CreativeMotorBlockEntity)h.getBlockEntity(above.above());motor.generatedSpeed.setValue(32);motor.updateGeneratedRotation();
         h.runAfterDelay(50,() -> {
             h.assertTrue(((LaserBlockEntity)h.getBlockEntity(EMITTER)).getSpeed()==0,"Vertical shaft drove laser");h.succeed();
         });
     }
     @GameTest(template="empty",timeoutTicks=120)
-    public static void smallCogCannotDriveLaser(GameTestHelper h) {
-        setup(h,"red",1);
-        h.setBlock(COG,AllBlocks.COGWHEEL.getDefaultState().setValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.AXIS,Direction.Axis.X));
+    public static void overheadCogCannotDriveLaser(GameTestHelper h) {
+        setup(h,"red",1);h.setBlock(MOTOR,Blocks.AIR);
+        var above=EMITTER.above();
+        h.setBlock(above,AllBlocks.LARGE_COGWHEEL.getDefaultState().setValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.AXIS,Direction.Axis.X));
+        h.setBlock(above.east(),AllBlocks.CREATIVE_MOTOR.getDefaultState().setValue(DirectionalKineticBlock.FACING,Direction.WEST));
+        var motor=(CreativeMotorBlockEntity)h.getBlockEntity(above.east());motor.generatedSpeed.setValue(32);motor.updateGeneratedRotation();
         h.runAfterDelay(50,() -> {
-            h.assertTrue(((LaserBlockEntity)h.getBlockEntity(EMITTER)).getSpeed()==0,"Small cog drove laser");h.succeed();
+            h.assertTrue(((LaserBlockEntity)h.getBlockEntity(EMITTER)).getSpeed()==0,"Removed overhead cog drive is still active");h.succeed();
         });
     }
     @GameTest(template="empty",timeoutTicks=120)
-    public static void parallelCogCannotDriveLaser(GameTestHelper h) {
-        setup(h,"red",1);
-        h.setBlock(COG,AllBlocks.LARGE_COGWHEEL.getDefaultState().setValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.AXIS,Direction.Axis.Z));
-        h.setBlock(COG.south(),AllBlocks.CREATIVE_MOTOR.getDefaultState().setValue(DirectionalKineticBlock.FACING,Direction.NORTH));
-        var motor=(CreativeMotorBlockEntity)h.getBlockEntity(COG.south());motor.generatedSpeed.setValue(32);motor.updateGeneratedRotation();
-        h.runAfterDelay(50,() -> {
-            h.assertTrue(((LaserBlockEntity)h.getBlockEntity(EMITTER)).getSpeed()==0,"Parallel cog axle drove laser");h.succeed();
-        });
-    }
-    @GameTest(template="empty",timeoutTicks=120)
-    public static void acceptsCogOnRotatedLaser(GameTestHelper h) {
-        setup(h,"red",1);
-        h.setBlock(MOTOR,Blocks.AIR);
+    public static void acceptsSideShaftOnRotatedLaser(GameTestHelper h) {
+        setup(h,"red",1);h.setBlock(MOTOR,Blocks.AIR);
         h.setBlock(EMITTER,AlchemicalLaser.EMITTER.get().defaultBlockState().setValue(com.simibubi.create.content.kinetics.base.HorizontalKineticBlock.HORIZONTAL_FACING,Direction.EAST));
-        h.setBlock(COG,AllBlocks.LARGE_COGWHEEL.getDefaultState().setValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.AXIS,Direction.Axis.Z));
-        h.setBlock(COG.south(),AllBlocks.CREATIVE_MOTOR.getDefaultState().setValue(DirectionalKineticBlock.FACING,Direction.NORTH));
-        var motor=(CreativeMotorBlockEntity)h.getBlockEntity(COG.south());motor.generatedSpeed.setValue(-32);motor.updateGeneratedRotation();
+        h.setBlock(EMITTER.east(),AllBlocks.CREATIVE_MOTOR.getDefaultState().setValue(DirectionalKineticBlock.FACING,Direction.WEST));
+        var motor=(CreativeMotorBlockEntity)h.getBlockEntity(EMITTER.east());motor.generatedSpeed.setValue(-32);motor.updateGeneratedRotation();
         h.runAfterDelay(50,() -> {
-            h.assertTrue(Math.abs(((LaserBlockEntity)h.getBlockEntity(EMITTER)).getSpeed())==32,"Rotated controller did not accept perpendicular cog");h.succeed();
+            h.assertTrue(Math.abs(((LaserBlockEntity)h.getBlockEntity(EMITTER)).getSpeed())==32,"Rotated emitter did not accept side shaft");h.succeed();
         });
     }
     @GameTest(template="empty",timeoutTicks=120)
-    public static void removingCogStopsLaser(GameTestHelper h) {
-        setup(h,"red",1);
-        h.runAfterDelay(25,() -> h.setBlock(COG,Blocks.AIR));
-        h.runAfterDelay(70,() -> {
-            var be=(LaserBlockEntity)h.getBlockEntity(EMITTER);
-            h.assertTrue(be.getSpeed()==0&&!be.isBeamActive(),"Laser kept running without its drive cog");h.succeed();
+    public static void acceptsOppositeSideShaft(GameTestHelper h) {
+        setup(h,"red",1);h.setBlock(MOTOR,Blocks.AIR);
+        h.setBlock(EMITTER.north(),AllBlocks.CREATIVE_MOTOR.getDefaultState().setValue(DirectionalKineticBlock.FACING,Direction.SOUTH));
+        var motor=(CreativeMotorBlockEntity)h.getBlockEntity(EMITTER.north());motor.generatedSpeed.setValue(-32);motor.updateGeneratedRotation();
+        h.runAfterDelay(50,() -> {
+            h.assertTrue(Math.abs(((LaserBlockEntity)h.getBlockEntity(EMITTER)).getSpeed())==32,"Opposite shaft end did not accept power");h.succeed();
         });
     }
-
 }

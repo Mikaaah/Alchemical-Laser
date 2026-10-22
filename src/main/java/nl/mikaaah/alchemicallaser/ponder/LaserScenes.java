@@ -36,19 +36,19 @@ public class LaserScenes {
         s.overlay().showOutline(PonderPalette.GREEN, LASER,u.select().position(LASER.below()),60);s.idle(65);
         s.world().setBlock(BELT,AllBlocks.DEPOT.getDefaultState(),true);
         text(s,u,"A Depot works at the same height. Funnels and hoppers can supply and extract items.",BELT);
-        s.world().showSection(u.select().position(LASER.above()),Direction.NORTH);
-        text(s,u,"Place a large cogwheel directly above the emitter, with its axle across the top channel, like a Rotation Speed Controller.",LASER.above());
+        s.world().showSection(u.select().position(LASER.south()),Direction.NORTH);
+        text(s,u,"Connect a shaft to either exposed end of the horizontal axle. Use a wrench to rotate the emitter and align the shaft.",LASER.south());
         s.markAsFinished();
     }
     public static void power(SceneBuilder b, SceneBuildingUtil u) {
         var s=base(b,u,"laser_power","Power and processing speed");
-        s.world().showSection(u.select().position(LASER.above()),Direction.NORTH);
-        s.world().setKineticSpeed(u.select().position(LASER).add(u.select().position(LASER.above())),8);
+        s.world().showSection(u.select().position(LASER.south()),Direction.NORTH);
+        s.world().setKineticSpeed(u.select().position(LASER).add(u.select().position(LASER.south())),8);
         text(s,u,"The default minimum speed is 16 RPM. Individual recipes can require a higher speed.",LASER);
-        s.world().setKineticSpeed(u.select().position(LASER).add(u.select().position(LASER.above())),32);
+        s.world().setKineticSpeed(u.select().position(LASER).add(u.select().position(LASER.south())),32);
         lens(s,"red",LASER);
         text(s,u,"Recipe durations are measured at 32 RPM. The laser always draws stress from the network while connected.",LASER);
-        s.world().setKineticSpeed(u.select().position(LASER).add(u.select().position(LASER.above())),128);
+        s.world().setKineticSpeed(u.select().position(LASER).add(u.select().position(LASER.south())),128);
         phase(s,LASER,LaserBlockEntity.Phase.PROCESSING);
         text(s,u,"Higher speed shortens processing, up to the configured effective speed cap. Charging still takes a short fixed time.",LASER);
         phase(s,LASER,LaserBlockEntity.Phase.IDLE);s.markAsFinished();
@@ -79,7 +79,7 @@ public class LaserScenes {
     }
     public static void automation(SceneBuilder b, SceneBuildingUtil u) {
         var s=base(b,u,"laser_automation","Chaining laser transformations");
-        s.world().showSection(u.select().position(SECOND).add(u.select().position(SECOND.above())),Direction.DOWN);
+        s.world().showSection(u.select().position(SECOND).add(u.select().position(SECOND.south())),Direction.DOWN);
         lens(s,"purple",LASER);lens(s,"white",SECOND);
         text(s,u,"Use multiple emitters with different lenses to build a sequential processing line.",LASER);
         var item=s.world().createItemOnBelt(BELT,Direction.WEST,new ItemStack(Items.AMETHYST_SHARD));
