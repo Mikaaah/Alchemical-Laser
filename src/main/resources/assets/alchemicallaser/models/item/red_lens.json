@@ -1,6 +1,700 @@
 {
-  "parent": "minecraft:item/generated",
+  "parent": "minecraft:block/block",
+  "gui_light": "front",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
-    "layer0": "alchemicallaser:item/red_lens"
+    "glass": "alchemicallaser:item/red_lens",
+    "rim": "alchemicallaser:block/deco_brass_cage",
+    "particle": "alchemicallaser:item/red_lens"
+  },
+  "elements": [
+    {
+      "name": "optical_cartridge",
+      "from": [
+        5,
+        7.25,
+        1
+      ],
+      "to": [
+        11,
+        8.75,
+        2
+      ],
+      "faces": {
+        "north": {
+          "texture": "#rim",
+          "uv": [
+            10,
+            6,
+            16,
+            8
+          ]
+        },
+        "east": {
+          "texture": "#rim",
+          "uv": [
+            10,
+            6,
+            16,
+            8
+          ]
+        },
+        "south": {
+          "texture": "#rim",
+          "uv": [
+            10,
+            6,
+            16,
+            8
+          ]
+        },
+        "west": {
+          "texture": "#rim",
+          "uv": [
+            10,
+            6,
+            16,
+            8
+          ]
+        },
+        "up": {
+          "texture": "#glass",
+          "uv": [
+            5,
+            1,
+            11,
+            2
+          ]
+        },
+        "down": {
+          "texture": "#glass",
+          "uv": [
+            5,
+            1,
+            11,
+            2
+          ]
+        }
+      }
+    },
+    {
+      "name": "optical_cartridge",
+      "from": [
+        4,
+        7.25,
+        2
+      ],
+      "to": [
+        12,
+        8.75,
+        3
+      ],
+      "faces": {
+        "north": {
+          "texture": "#rim",
+          "uv": [
+            10,
+            6,
+            16,
+            8
+          ]
+        },
+        "east": {
+          "texture": "#rim",
+          "uv": [
+            10,
+            6,
+            16,
+            8
+          ]
+        },
+        "south": {
+          "texture": "#rim",
+          "uv": [
+            10,
+            6,
+            16,
+            8
+          ]
+        },
+        "west": {
+          "texture": "#rim",
+          "uv": [
+            10,
+            6,
+            16,
+            8
+          ]
+        },
+        "up": {
+          "texture": "#glass",
+          "uv": [
+            4,
+            2,
+            12,
+            3
+          ]
+        },
+        "down": {
+          "texture": "#glass",
+          "uv": [
+            4,
+            2,
+            12,
+            3
+          ]
+        }
+      }
+    },
+    {
+      "name": "optical_cartridge",
+      "from": [
+        3,
+        7.25,
+        3
+      ],
+      "to": [
+        13,
+        8.75,
+        4
+      ],
+      "faces": {
+        "north": {
+          "texture": "#rim",
+          "uv": [
+            10,
+            6,
+            16,
+            8
+          ]
+        },
+        "east": {
+          "texture": "#rim",
+          "uv": [
+            10,
+            6,
+            16,
+            8
+          ]
+        },
+        "south": {
+          "texture": "#rim",
+          "uv": [
+            10,
+            6,
+            16,
+            8
+          ]
+        },
+        "west": {
+          "texture": "#rim",
+          "uv": [
+            10,
+            6,
+            16,
+            8
+          ]
+        },
+        "up": {
+          "texture": "#glass",
+          "uv": [
+            3,
+            3,
+            13,
+            4
+          ]
+        },
+        "down": {
+          "texture": "#glass",
+          "uv": [
+            3,
+            3,
+            13,
+            4
+          ]
+        }
+      }
+    },
+    {
+      "name": "optical_cartridge",
+      "from": [
+        2,
+        7.25,
+        4
+      ],
+      "to": [
+        14,
+        8.75,
+        5
+      ],
+      "faces": {
+        "north": {
+          "texture": "#rim",
+          "uv": [
+            10,
+            6,
+            16,
+            8
+          ]
+        },
+        "east": {
+          "texture": "#rim",
+          "uv": [
+            10,
+            6,
+            16,
+            8
+          ]
+        },
+        "south": {
+          "texture": "#rim",
+          "uv": [
+            10,
+            6,
+            16,
+            8
+          ]
+        },
+        "west": {
+          "texture": "#rim",
+          "uv": [
+            10,
+            6,
+            16,
+            8
+          ]
+        },
+        "up": {
+          "texture": "#glass",
+          "uv": [
+            2,
+            4,
+            14,
+            5
+          ]
+        },
+        "down": {
+          "texture": "#glass",
+          "uv": [
+            2,
+            4,
+            14,
+            5
+          ]
+        }
+      }
+    },
+    {
+      "name": "optical_cartridge",
+      "from": [
+        1,
+        7.25,
+        5
+      ],
+      "to": [
+        15,
+        8.75,
+        11
+      ],
+      "faces": {
+        "north": {
+          "texture": "#rim",
+          "uv": [
+            10,
+            6,
+            16,
+            8
+          ]
+        },
+        "east": {
+          "texture": "#rim",
+          "uv": [
+            10,
+            6,
+            16,
+            8
+          ]
+        },
+        "south": {
+          "texture": "#rim",
+          "uv": [
+            10,
+            6,
+            16,
+            8
+          ]
+        },
+        "west": {
+          "texture": "#rim",
+          "uv": [
+            10,
+            6,
+            16,
+            8
+          ]
+        },
+        "up": {
+          "texture": "#glass",
+          "uv": [
+            1,
+            5,
+            15,
+            11
+          ]
+        },
+        "down": {
+          "texture": "#glass",
+          "uv": [
+            1,
+            5,
+            15,
+            11
+          ]
+        }
+      }
+    },
+    {
+      "name": "optical_cartridge",
+      "from": [
+        2,
+        7.25,
+        11
+      ],
+      "to": [
+        14,
+        8.75,
+        12
+      ],
+      "faces": {
+        "north": {
+          "texture": "#rim",
+          "uv": [
+            10,
+            6,
+            16,
+            8
+          ]
+        },
+        "east": {
+          "texture": "#rim",
+          "uv": [
+            10,
+            6,
+            16,
+            8
+          ]
+        },
+        "south": {
+          "texture": "#rim",
+          "uv": [
+            10,
+            6,
+            16,
+            8
+          ]
+        },
+        "west": {
+          "texture": "#rim",
+          "uv": [
+            10,
+            6,
+            16,
+            8
+          ]
+        },
+        "up": {
+          "texture": "#glass",
+          "uv": [
+            2,
+            11,
+            14,
+            12
+          ]
+        },
+        "down": {
+          "texture": "#glass",
+          "uv": [
+            2,
+            11,
+            14,
+            12
+          ]
+        }
+      }
+    },
+    {
+      "name": "optical_cartridge",
+      "from": [
+        3,
+        7.25,
+        12
+      ],
+      "to": [
+        13,
+        8.75,
+        13
+      ],
+      "faces": {
+        "north": {
+          "texture": "#rim",
+          "uv": [
+            10,
+            6,
+            16,
+            8
+          ]
+        },
+        "east": {
+          "texture": "#rim",
+          "uv": [
+            10,
+            6,
+            16,
+            8
+          ]
+        },
+        "south": {
+          "texture": "#rim",
+          "uv": [
+            10,
+            6,
+            16,
+            8
+          ]
+        },
+        "west": {
+          "texture": "#rim",
+          "uv": [
+            10,
+            6,
+            16,
+            8
+          ]
+        },
+        "up": {
+          "texture": "#glass",
+          "uv": [
+            3,
+            12,
+            13,
+            13
+          ]
+        },
+        "down": {
+          "texture": "#glass",
+          "uv": [
+            3,
+            12,
+            13,
+            13
+          ]
+        }
+      }
+    },
+    {
+      "name": "optical_cartridge",
+      "from": [
+        4,
+        7.25,
+        13
+      ],
+      "to": [
+        12,
+        8.75,
+        14
+      ],
+      "faces": {
+        "north": {
+          "texture": "#rim",
+          "uv": [
+            10,
+            6,
+            16,
+            8
+          ]
+        },
+        "east": {
+          "texture": "#rim",
+          "uv": [
+            10,
+            6,
+            16,
+            8
+          ]
+        },
+        "south": {
+          "texture": "#rim",
+          "uv": [
+            10,
+            6,
+            16,
+            8
+          ]
+        },
+        "west": {
+          "texture": "#rim",
+          "uv": [
+            10,
+            6,
+            16,
+            8
+          ]
+        },
+        "up": {
+          "texture": "#glass",
+          "uv": [
+            4,
+            13,
+            12,
+            14
+          ]
+        },
+        "down": {
+          "texture": "#glass",
+          "uv": [
+            4,
+            13,
+            12,
+            14
+          ]
+        }
+      }
+    },
+    {
+      "name": "optical_cartridge",
+      "from": [
+        5,
+        7.25,
+        14
+      ],
+      "to": [
+        11,
+        8.75,
+        15
+      ],
+      "faces": {
+        "north": {
+          "texture": "#rim",
+          "uv": [
+            10,
+            6,
+            16,
+            8
+          ]
+        },
+        "east": {
+          "texture": "#rim",
+          "uv": [
+            10,
+            6,
+            16,
+            8
+          ]
+        },
+        "south": {
+          "texture": "#rim",
+          "uv": [
+            10,
+            6,
+            16,
+            8
+          ]
+        },
+        "west": {
+          "texture": "#rim",
+          "uv": [
+            10,
+            6,
+            16,
+            8
+          ]
+        },
+        "up": {
+          "texture": "#glass",
+          "uv": [
+            5,
+            14,
+            11,
+            15
+          ]
+        },
+        "down": {
+          "texture": "#glass",
+          "uv": [
+            5,
+            14,
+            11,
+            15
+          ]
+        }
+      }
+    }
+  ],
+  "display": {
+    "gui": {
+      "rotation": [
+        90,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "fixed": {
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "ground": {
+      "translation": [
+        0,
+        1.5,
+        0
+      ],
+      "scale": [
+        0.5,
+        0.5,
+        0.5
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        25,
+        -20,
+        0
+      ],
+      "scale": [
+        0.65,
+        0.65,
+        0.65
+      ]
+    },
+    "thirdperson_righthand": {
+      "rotation": [
+        60,
+        0,
+        0
+      ],
+      "translation": [
+        0,
+        2,
+        0
+      ],
+      "scale": [
+        0.5,
+        0.5,
+        0.5
+      ]
+    }
   }
 }

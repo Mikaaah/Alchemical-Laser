@@ -9,7 +9,9 @@ public class LaserPonderPlugin implements PonderPlugin {
     @Override public String getModId() { return AlchemicalLaser.ID; }
     @Override public void registerScenes(PonderSceneRegistrationHelper<ResourceLocation> helper) {
         var scenes = helper.forComponents(AlchemicalLaser.id("laser_emitter"), AlchemicalLaser.id("red_lens"),
-            AlchemicalLaser.id("blue_lens"), AlchemicalLaser.id("purple_lens"), AlchemicalLaser.id("white_lens"));
+            AlchemicalLaser.id("blue_lens"), AlchemicalLaser.id("purple_lens"), AlchemicalLaser.id("white_lens"),
+            AlchemicalLaser.id("growth_lens"), AlchemicalLaser.id("convergence_lens"), AlchemicalLaser.id("splitting_lens"),
+            AlchemicalLaser.id("power_lens"), AlchemicalLaser.id("eclipse_lens"));
         scenes.addStoryBoard("laser_workshop", LaserScenes::setup, TAG);
         scenes.addStoryBoard("laser_workshop", LaserScenes::power, TAG);
         scenes.addStoryBoard("laser_workshop", LaserScenes::processing, TAG);
@@ -24,6 +26,6 @@ public class LaserPonderPlugin implements PonderPlugin {
         helper.registerTag(TAG).addToIndex().item(AlchemicalLaser.EMITTER_ITEM.get(), true, false)
             .title("Alchemical Lasers").description("Kinetic processing with interchangeable optical lenses").register();
         var tag = helper.addToTag(TAG);
-        for (String item : new String[]{"laser_emitter", "red_lens", "blue_lens", "purple_lens", "white_lens"}) tag.add(AlchemicalLaser.id(item));
+        for (String item : new String[]{"laser_emitter", "red_lens", "blue_lens", "purple_lens", "white_lens", "growth_lens", "convergence_lens", "splitting_lens", "power_lens", "eclipse_lens"}) tag.add(AlchemicalLaser.id(item));
     }
 }

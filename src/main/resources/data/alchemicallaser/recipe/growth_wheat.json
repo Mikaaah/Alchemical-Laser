@@ -1,0 +1,14 @@
+{
+  "type": "alchemicallaser:laser_processing",
+  "ingredient": {
+    "item": "minecraft:wheat_seeds"
+  },
+  "input_count": 1,
+  "lens": "alchemicallaser:growth_lens",
+  "result": {
+    "id": "minecraft:wheat",
+    "count": 1
+  },
+  "duration": 160,
+  "minimum_rpm": 16
+}

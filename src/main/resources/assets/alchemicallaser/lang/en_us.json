@@ -27,7 +27,7 @@
   "alchemicallaser.ponder.laser_setup.header": "Setting up an Alchemical Laser",
   "alchemicallaser.ponder.laser_setup.text_1": "Place the emitter above a horizontal belt, leaving one air block between them, just like a Mechanical Press.",
   "alchemicallaser.ponder.laser_setup.text_2": "A Depot works at the same height. Funnels and hoppers can supply and extract items.",
-  "alchemicallaser.ponder.laser_setup.text_3": "Connect a shaft to either side along the emitter's shaft axis. Use a wrench to rotate or remove the emitter.",
+  "alchemicallaser.ponder.laser_setup.text_3": "Connect a vertical shaft to the top drive. The underside stays clear for the focusing lens and beam.",
   "alchemicallaser.ponder.laser_power.header": "Power and processing speed",
   "alchemicallaser.ponder.laser_power.text_1": "The default minimum speed is 16 RPM. Individual recipes can require a higher speed.",
   "alchemicallaser.ponder.laser_power.text_2": "Recipe durations are measured at 32 RPM. The laser always draws stress from the network while connected.",
@@ -38,7 +38,7 @@
   "alchemicallaser.ponder.laser_belt_processing.text_3": "The output continues along the belt. Stacks are processed one recipe quantity per cycle; leftovers are retained.",
   "alchemicallaser.ponder.laser_lenses.header": "Changing optical lenses",
   "alchemicallaser.ponder.laser_lenses.text_1": "Right-click with a lens to install it or exchange the installed lens. Lenses are reusable.",
-  "alchemicallaser.ponder.laser_lenses.text_2": "Red, blue, purple and white lenses select different recipes and change the beam color.",
+  "alchemicallaser.ponder.laser_lenses.text_2": "Nine reusable lenses select different recipes: four colored optics plus Growth, Convergence, Splitting, Power and Eclipse.",
   "alchemicallaser.ponder.laser_lenses.text_3": "Sneak-right-click with an empty hand to remove the lens. Item-handler automation can also insert and extract lenses.",
   "alchemicallaser.ponder.laser_automation.header": "Chaining laser transformations",
   "alchemicallaser.ponder.laser_automation.text_1": "Use multiple emitters with different lenses to build a sequential processing line.",
@@ -52,5 +52,10 @@
   "alchemicallaser.ponder.tag.laser_processing.description": "Kinetic processing with interchangeable optical lenses",
   "emi.category.alchemicallaser.laser_processing": "Alchemical Laser Processing",
   "recipe.alchemicallaser.duration": "%s ticks at 32 RPM",
-  "recipe.alchemicallaser.minimum": "Minimum speed: %s RPM"
+  "recipe.alchemicallaser.minimum": "Minimum speed: %s RPM",
+  "item.alchemicallaser.growth_lens": "Growth Lens",
+  "item.alchemicallaser.convergence_lens": "Convergence Lens",
+  "item.alchemicallaser.splitting_lens": "Splitting Lens",
+  "item.alchemicallaser.power_lens": "Power Lens",
+  "item.alchemicallaser.eclipse_lens": "Eclipse Lens"
 }

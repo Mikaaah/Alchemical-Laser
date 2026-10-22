@@ -127,3 +127,6 @@ structure=n.File({'DataVersion':n.Int(3955),'size':n.List[n.Int]([7,5,7]),'palet
 (A/'ponder').mkdir(exist_ok=True)
 structure.save(A/'ponder/laser_workshop.nbt')
 print('Generated original textures, models, crafting/processing recipes, seven audio events and Ponder structure.')
+
+# Apply the current optics after generating the legacy base assets.
+subprocess.run([__import__("sys").executable, str(Path(__file__).with_name("redesign_optics.py"))], check=True)

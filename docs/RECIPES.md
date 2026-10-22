@@ -59,3 +59,15 @@ Lens appearance and audio pitch use a synced NeoForge item data map at `data/alc
 ```
 
 `color` is a decimal RGB value from 0 to 16777215; `pitch` is 0.5–2.0. A recipe can then require `"lens": "minecraft:emerald"`. The item remains reusable, with one stored in the emitter. Existing lens item textures are unchanged by a beam-color override.
+
+## Built-in specialist lenses (0.2.0)
+
+| Lens ID | Starter transformation | Minimum RPM |
+|---|---|---|
+| `alchemicallaser:growth_lens` | Wheat seeds → wheat | 16 |
+| `alchemicallaser:convergence_lens` | 4 amethyst shards → amethyst block | 32 |
+| `alchemicallaser:splitting_lens` | Amethyst block → 4 amethyst shards | 32 |
+| `alchemicallaser:power_lens` | Obsidian → crying obsidian | 64 |
+| `alchemicallaser:eclipse_lens` | Sculk → echo shard | 128 |
+
+These are reusable recipe catalysts. They do not apply hardcoded world-growth, multi-beam or damage effects. Use these lens IDs with the same recipe type and optional fields described above.

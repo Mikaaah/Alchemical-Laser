@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " B ",
+    "GCG",
+    " B "
+  ],
+  "key": {
+    "B": {
+      "item": "create:brass_ingot"
+    },
+    "G": {
+      "item": "minecraft:tinted_glass"
+    },
+    "C": {
+      "item": "minecraft:echo_shard"
+    }
+  },
+  "result": {
+    "id": "alchemicallaser:eclipse_lens",
+    "count": 1
+  }
+}

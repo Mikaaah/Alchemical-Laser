@@ -1,0 +1,14 @@
+{
+  "type": "alchemicallaser:laser_processing",
+  "ingredient": {
+    "item": "minecraft:sculk"
+  },
+  "input_count": 1,
+  "lens": "alchemicallaser:eclipse_lens",
+  "result": {
+    "id": "minecraft:echo_shard",
+    "count": 1
+  },
+  "duration": 400,
+  "minimum_rpm": 128
+}

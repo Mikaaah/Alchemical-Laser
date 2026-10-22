@@ -15,11 +15,11 @@ import nl.mikaaah.alchemicallaser.*;
 @GameTestHolder(AlchemicalLaser.ID)
 @PrefixGameTestTemplate(false)
 public class LaserGameTests {
-    private static final BlockPos EMITTER = new BlockPos(2,3,2), DEPOT = new BlockPos(2,1,2), MOTOR = new BlockPos(2,3,3);
+    private static final BlockPos EMITTER = new BlockPos(2,3,2), DEPOT = new BlockPos(2,1,2), MOTOR = new BlockPos(2,4,2);
     private static LaserBlockEntity setup(GameTestHelper h, String lens, int count) {
         h.setBlock(DEPOT,AllBlocks.DEPOT.getDefaultState());
         h.setBlock(EMITTER,AlchemicalLaser.EMITTER.get().defaultBlockState());
-        h.setBlock(MOTOR,AllBlocks.CREATIVE_MOTOR.getDefaultState().setValue(DirectionalKineticBlock.FACING,Direction.NORTH));
+        h.setBlock(MOTOR,AllBlocks.CREATIVE_MOTOR.getDefaultState().setValue(DirectionalKineticBlock.FACING,Direction.DOWN));
         var motor=(CreativeMotorBlockEntity)h.getBlockEntity(MOTOR);motor.generatedSpeed.setValue(32);motor.updateGeneratedRotation();
         var be=(LaserBlockEntity)h.getBlockEntity(EMITTER);be.exchangeLens(AlchemicalLaser.LENSES.get(lens).toStack());
         var depot=(DepotBlockEntity)h.getBlockEntity(DEPOT);
@@ -112,7 +112,7 @@ public class LaserGameTests {
     }
     private static void beltTest(GameTestHelper h,int rpm) {
         h.setBlock(EMITTER,AlchemicalLaser.EMITTER.get().defaultBlockState());
-        h.setBlock(MOTOR,AllBlocks.CREATIVE_MOTOR.getDefaultState().setValue(DirectionalKineticBlock.FACING,Direction.NORTH));
+        h.setBlock(MOTOR,AllBlocks.CREATIVE_MOTOR.getDefaultState().setValue(DirectionalKineticBlock.FACING,Direction.DOWN));
         var power=(CreativeMotorBlockEntity)h.getBlockEntity(MOTOR);power.generatedSpeed.setValue(32);power.updateGeneratedRotation();
         ((LaserBlockEntity)h.getBlockEntity(EMITTER)).exchangeLens(AlchemicalLaser.LENSES.get("red").toStack());
         BlockPos start=new BlockPos(0,1,2),end=new BlockPos(4,1,2),drive=new BlockPos(0,1,3);
@@ -164,6 +164,53 @@ public class LaserGameTests {
         h.runAfterDelay(60,() -> {
             var stack=((DepotBlockEntity)h.getBlockEntity(DEPOT)).getBehaviour(com.simibubi.create.content.logistics.depot.DepotBehaviour.TYPE).getHeldItemStack();
             h.assertTrue(stack.is(Items.SAND)&&stack.getCount()==2,"Below-minimum speed changed the input");h.succeed();
+        });
+    }
+    @GameTest(template="empty",timeoutTicks=100)
+    public static void acceptsOnlyOverheadShaft(GameTestHelper h) {
+        var be=setup(h,"red",1);
+        var block=AlchemicalLaser.EMITTER.get();
+        var state=h.getBlockState(EMITTER);
+        h.assertTrue(block.getRotationAxis(state)==Direction.Axis.Y,"Drive must rotate vertically");
+        for(Direction face:Direction.values()) {
+            h.assertTrue(block.hasShaftTowards(h.getLevel(),h.absolutePos(EMITTER),state,face)==(face==Direction.UP),
+                "Unexpected shaft connection on "+face);
+        }
+        h.runAfterDelay(20,() -> {
+            h.assertTrue(Math.abs(be.getSpeed())==32,"Overhead motor did not drive emitter"); h.succeed();
+        });
+    }
+    private static void specialistTest(GameTestHelper h,String lens,Item input,int count,Item output,int amount,int rpm) {
+        setup(h,lens,0);
+        var motor=(CreativeMotorBlockEntity)h.getBlockEntity(MOTOR);
+        motor.generatedSpeed.setValue(rpm);motor.updateGeneratedRotation();
+        ((DepotBlockEntity)h.getBlockEntity(DEPOT)).getBehaviour(com.simibubi.create.content.logistics.depot.DepotBehaviour.TYPE)
+            .setCenteredHeldItem(new com.simibubi.create.content.kinetics.belt.transport.TransportedItemStack(new ItemStack(input,count)));
+        h.succeedWhen(() -> {
+            var stack=((DepotBlockEntity)h.getBlockEntity(DEPOT)).getBehaviour(com.simibubi.create.content.logistics.depot.DepotBehaviour.TYPE).getHeldItemStack();
+            h.assertTrue(stack.is(output)&&stack.getCount()==amount,"Wrong "+lens+" lens result");
+            var be=(LaserBlockEntity)h.getBlockEntity(EMITTER);
+            h.assertTrue(be.lens().is(AlchemicalLaser.LENSES.get(lens).get())&&be.lens().getCount()==1,"Lens was consumed");
+        });
+    }
+    @GameTest(template="empty",timeoutTicks=250)
+    public static void growthLensProcessesSeeds(GameTestHelper h) { specialistTest(h,"growth",Items.WHEAT_SEEDS,1,Items.WHEAT,1,32); }
+    @GameTest(template="empty",timeoutTicks=250)
+    public static void convergenceConsumesFourShards(GameTestHelper h) { specialistTest(h,"convergence",Items.AMETHYST_SHARD,4,Items.AMETHYST_BLOCK,1,32); }
+    @GameTest(template="empty",timeoutTicks=250)
+    public static void splittingReturnsFourShards(GameTestHelper h) { specialistTest(h,"splitting",Items.AMETHYST_BLOCK,1,Items.AMETHYST_SHARD,4,32); }
+    @GameTest(template="empty",timeoutTicks=250)
+    public static void powerLensProcessesObsidian(GameTestHelper h) { specialistTest(h,"power",Items.OBSIDIAN,1,Items.CRYING_OBSIDIAN,1,64); }
+    @GameTest(template="empty",timeoutTicks=250)
+    public static void eclipseLensProcessesSculk(GameTestHelper h) { specialistTest(h,"eclipse",Items.SCULK,1,Items.ECHO_SHARD,1,128); }
+    @GameTest(template="empty",timeoutTicks=250)
+    public static void convergenceRequiresFullInput(GameTestHelper h) {
+        setup(h,"convergence",0);
+        ((DepotBlockEntity)h.getBlockEntity(DEPOT)).getBehaviour(com.simibubi.create.content.logistics.depot.DepotBehaviour.TYPE)
+            .setCenteredHeldItem(new com.simibubi.create.content.kinetics.belt.transport.TransportedItemStack(new ItemStack(Items.AMETHYST_SHARD,3)));
+        h.runAfterDelay(220,() -> {
+            var stack=((DepotBlockEntity)h.getBlockEntity(DEPOT)).getBehaviour(com.simibubi.create.content.logistics.depot.DepotBehaviour.TYPE).getHeldItemStack();
+            h.assertTrue(stack.is(Items.AMETHYST_SHARD)&&stack.getCount()==3,"Incomplete convergence input was consumed");h.succeed();
         });
     }
 }

@@ -1,20 +1,40 @@
 {
   "values": {
     "alchemicallaser:red_lens": {
-      "color": 16733008,
+      "color": 15623513,
       "pitch": 0.8
     },
     "alchemicallaser:blue_lens": {
-      "color": 4770559,
+      "color": 6930403,
       "pitch": 1.2
     },
     "alchemicallaser:purple_lens": {
-      "color": 12348671,
+      "color": 12096997,
       "pitch": 0.95
     },
     "alchemicallaser:white_lens": {
-      "color": 16774085,
+      "color": 15656122,
       "pitch": 1.05
+    },
+    "alchemicallaser:growth_lens": {
+      "color": 8832603,
+      "pitch": 1.15
+    },
+    "alchemicallaser:convergence_lens": {
+      "color": 15775325,
+      "pitch": 0.9
+    },
+    "alchemicallaser:splitting_lens": {
+      "color": 6674129,
+      "pitch": 1.3
+    },
+    "alchemicallaser:power_lens": {
+      "color": 15171143,
+      "pitch": 0.7
+    },
+    "alchemicallaser:eclipse_lens": {
+      "color": 10651356,
+      "pitch": 0.6
     }
   }
 }

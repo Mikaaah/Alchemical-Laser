@@ -36,19 +36,19 @@ public class LaserScenes {
         s.overlay().showOutline(PonderPalette.GREEN, LASER,u.select().position(LASER.below()),60);s.idle(65);
         s.world().setBlock(BELT,AllBlocks.DEPOT.getDefaultState(),true);
         text(s,u,"A Depot works at the same height. Funnels and hoppers can supply and extract items.",BELT);
-        s.world().showSection(u.select().position(LASER.south()),Direction.NORTH);
-        text(s,u,"Connect a shaft to either side along the emitter's shaft axis. Use a wrench to rotate or remove the emitter.",LASER.south());
+        s.world().showSection(u.select().position(LASER.above()),Direction.NORTH);
+        text(s,u,"Connect a vertical shaft to the top drive. The underside stays clear for the focusing lens and beam.",LASER.above());
         s.markAsFinished();
     }
     public static void power(SceneBuilder b, SceneBuildingUtil u) {
         var s=base(b,u,"laser_power","Power and processing speed");
-        s.world().showSection(u.select().position(LASER.south()),Direction.NORTH);
-        s.world().setKineticSpeed(u.select().position(LASER).add(u.select().position(LASER.south())),8);
+        s.world().showSection(u.select().position(LASER.above()),Direction.NORTH);
+        s.world().setKineticSpeed(u.select().position(LASER).add(u.select().position(LASER.above())),8);
         text(s,u,"The default minimum speed is 16 RPM. Individual recipes can require a higher speed.",LASER);
-        s.world().setKineticSpeed(u.select().position(LASER).add(u.select().position(LASER.south())),32);
+        s.world().setKineticSpeed(u.select().position(LASER).add(u.select().position(LASER.above())),32);
         lens(s,"red",LASER);
         text(s,u,"Recipe durations are measured at 32 RPM. The laser always draws stress from the network while connected.",LASER);
-        s.world().setKineticSpeed(u.select().position(LASER).add(u.select().position(LASER.south())),128);
+        s.world().setKineticSpeed(u.select().position(LASER).add(u.select().position(LASER.above())),128);
         phase(s,LASER,LaserBlockEntity.Phase.PROCESSING);
         text(s,u,"Higher speed shortens processing, up to the configured effective speed cap. Charging still takes a short fixed time.",LASER);
         phase(s,LASER,LaserBlockEntity.Phase.IDLE);s.markAsFinished();
@@ -68,18 +68,18 @@ public class LaserScenes {
     public static void lenses(SceneBuilder b, SceneBuildingUtil u) {
         var s=base(b,u,"laser_lenses","Changing optical lenses");
         text(s,u,"Right-click with a lens to install it or exchange the installed lens. Lenses are reusable.",LASER);
-        for(String color:new String[]{"red","blue","purple","white"}) {
+        for(String color:new String[]{"red","blue","purple","white","growth","convergence","splitting","power","eclipse"}) {
             s.overlay().showControls(u.vector().centerOf(LASER),Pointing.DOWN,30).rightClick().withItem(AlchemicalLaser.LENSES.get(color).toStack());
             lens(s,color,LASER);phase(s,LASER,LaserBlockEntity.Phase.PROCESSING);s.idle(35);phase(s,LASER,LaserBlockEntity.Phase.IDLE);
         }
-        text(s,u,"Red, blue, purple and white lenses select different recipes and change the beam color.",LASER);
+        text(s,u,"Nine reusable lenses select different recipes: four colored optics plus Growth, Convergence, Splitting, Power and Eclipse.",LASER);
         s.world().modifyBlockEntity(LASER,LaserBlockEntity.class,be -> be.exchangeLens(ItemStack.EMPTY));
         text(s,u,"Sneak-right-click with an empty hand to remove the lens. Item-handler automation can also insert and extract lenses.",LASER);
         s.markAsFinished();
     }
     public static void automation(SceneBuilder b, SceneBuildingUtil u) {
         var s=base(b,u,"laser_automation","Chaining laser transformations");
-        s.world().showSection(u.select().position(SECOND).add(u.select().position(SECOND.south())),Direction.DOWN);
+        s.world().showSection(u.select().position(SECOND).add(u.select().position(SECOND.above())),Direction.DOWN);
         lens(s,"purple",LASER);lens(s,"white",SECOND);
         text(s,u,"Use multiple emitters with different lenses to build a sequential processing line.",LASER);
         var item=s.world().createItemOnBelt(BELT,Direction.WEST,new ItemStack(Items.AMETHYST_SHARD));

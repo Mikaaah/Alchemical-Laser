@@ -1,0 +1,14 @@
+{
+  "type": "alchemicallaser:laser_processing",
+  "ingredient": {
+    "item": "minecraft:amethyst_block"
+  },
+  "input_count": 1,
+  "lens": "alchemicallaser:splitting_lens",
+  "result": {
+    "id": "minecraft:amethyst_shard",
+    "count": 4
+  },
+  "duration": 160,
+  "minimum_rpm": 32
+}

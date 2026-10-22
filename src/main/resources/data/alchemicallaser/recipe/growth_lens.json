@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " B ",
+    "GCG",
+    " B "
+  ],
+  "key": {
+    "B": {
+      "item": "create:brass_nugget"
+    },
+    "G": {
+      "item": "minecraft:glass"
+    },
+    "C": {
+      "item": "minecraft:moss_block"
+    }
+  },
+  "result": {
+    "id": "alchemicallaser:growth_lens",
+    "count": 1
+  }
+}

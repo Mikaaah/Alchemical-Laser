@@ -13,11 +13,12 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.*;
 
 public class LaserBlock extends HorizontalKineticBlock implements IBE<LaserBlockEntity> {
-    private static final VoxelShape SHAPE = Shapes.or(box(1, 6, 1, 15, 16, 15), box(4, 2, 4, 12, 6, 12));
+    private static final VoxelShape SHAPE = Shapes.or(box(2, 12, 2, 14, 16, 14),
+        box(4, 3, 4, 12, 12, 12), box(5, 0, 5, 11, 3, 11));
     public LaserBlock(Properties properties) { super(properties); }
-    @Override public Direction.Axis getRotationAxis(BlockState state) { return state.getValue(HORIZONTAL_FACING).getAxis(); }
+    @Override public Direction.Axis getRotationAxis(BlockState state) { return Direction.Axis.Y; }
     @Override public boolean hasShaftTowards(LevelReader level, BlockPos pos, BlockState state, Direction face) {
-        return face.getAxis() == getRotationAxis(state);
+        return face == Direction.UP;
     }
     @Override public Class<LaserBlockEntity> getBlockEntityClass() { return LaserBlockEntity.class; }
     @Override public BlockEntityType<? extends LaserBlockEntity> getBlockEntityType() { return AlchemicalLaser.LASER_ENTITY.get(); }

@@ -1,0 +1,14 @@
+{
+  "type": "alchemicallaser:laser_processing",
+  "ingredient": {
+    "item": "minecraft:obsidian"
+  },
+  "input_count": 1,
+  "lens": "alchemicallaser:power_lens",
+  "result": {
+    "id": "minecraft:crying_obsidian",
+    "count": 1
+  },
+  "duration": 240,
+  "minimum_rpm": 64
+}
