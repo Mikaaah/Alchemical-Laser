@@ -13,13 +13,11 @@ import nl.mikaaah.alchemicallaser.*;
 public class LaserRenderer extends KineticBlockEntityRenderer<LaserBlockEntity> {
     public LaserRenderer(BlockEntityRendererProvider.Context context) { super(context); }
     @Override protected void renderSafe(LaserBlockEntity be, float partial, PoseStack pose, MultiBufferSource buffer, int light, int overlay) {
-        // Only the top drive rotates; the optical chamber below remains unobstructed.
-        pose.pushPose(); pose.translate(0, .75, 0); pose.scale(1, .25f, 1);
+        // Native controller-style horizontal friction roller, driven by the cog above.
         renderRotatingKineticBlock(be, shaft(getRotationAxisOf(be)), pose, buffer.getBuffer(RenderType.solid()), light);
-        pose.popPose();
         float time = be.getLevel().getGameTime() + partial;
         if (!be.lens().isEmpty()) {
-            pose.pushPose(); pose.translate(.5, .065, .5);
+            pose.pushPose(); pose.translate(.5, -.31, .5);
             // FIXED displays use the lens's horizontal mounting transform, flush inside the nozzle.
             // Datapack lenses can still be ordinary generated item models, as in 0.1.0.
             if (AlchemicalLaser.LENSES.values().stream().noneMatch(item -> be.lens().is(item.get())))
@@ -33,9 +31,9 @@ public class LaserRenderer extends KineticBlockEntityRenderer<LaserBlockEntity> 
         int rgb = AlchemicalLaser.lensColor(be.lens());
         VertexConsumer vertex = buffer.getBuffer(RenderType.beaconBeam(AlchemicalLaser.id("textures/effect/beam.png"), true));
         float pulse = 1 + .12f * (float)Math.sin(time * 1.7);
-        tube(pose, vertex, .065f * pulse, .05f, -1.04f, rgb, 70, time);
-        tube(pose, vertex, .026f * pulse, .05f, -1.04f, rgb, 220, time);
-        tube(pose, vertex, .009f, .05f, -1.04f, 0xffffff, 255, time);
+        tube(pose, vertex, .065f * pulse, -.325f, -1.04f, rgb, 70, time);
+        tube(pose, vertex, .026f * pulse, -.325f, -1.04f, rgb, 220, time);
+        tube(pose, vertex, .009f, -.325f, -1.04f, 0xffffff, 255, time);
     }
     private static void tube(PoseStack pose, VertexConsumer out, float radius, float top, float bottom, int color, int alpha, float time) {
         int r = color >> 16 & 255, g = color >> 8 & 255, b = color & 255;

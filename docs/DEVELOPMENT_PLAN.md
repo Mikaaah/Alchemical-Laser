@@ -1,6 +1,6 @@
 # Alchemical Laser — Development Plan
 
-This is the original 0.1.0 specification and implementation checklist. The 0.2.0 optics update adds five specialist lenses, a permitted Create Deco lantern adaptation and overhead-only shaft input; see the current README and changelog.
+This is the original 0.1.0 specification and implementation checklist. The optics updates add five specialist lenses, a permitted Create Deco lantern adaptation and, in 0.2.1, a controller-style overhead large-cog drive; see the current README and changelog.
 
 Implementation status is recorded below. Checked implementation tasks mean source/assets are present; unperformed release checks remain unchecked. See `CHANGELOG.md` for exact validation evidence.
 **Minecraft:** 1.21.1  

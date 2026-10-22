@@ -26,6 +26,7 @@ public final class LaserEffects {
         var dust = new DustParticleOptions(new Vector3f((rgb>>16&255)/255f, (rgb>>8&255)/255f, (rgb&255)/255f), .65f);
         double x = pos.getX()+.5, y = pos.getY(), z = pos.getZ()+.5;
         if (charging) {
+            y -= .375;
             for (int i=0;i<2;i++) {
                 double a = level.random.nextDouble()*Math.PI*2, dx = Math.cos(a)*.35, dz = Math.sin(a)*.35;
                 level.addParticle(ParticleTypes.ENCHANT,x+dx,y+.15,z+dz,-dx*.8,0,-dz*.8);

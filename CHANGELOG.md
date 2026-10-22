@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.2.1
+
+- Kept the industrial lantern optics and replaced the andesite top cap with Create’s native Rotation Speed Controller top fittings, referenced directly from its baked model. No Create model or textures are bundled.
+- Added a working friction drive from a horizontal large cogwheel placed directly above, with its axle perpendicular to the emitter’s roller. Input and emitter RPM are 1:1. Plain shafts, small cogs and incorrectly oriented cogs cannot power it.
+- Automatically aligns placement beneath an existing horizontal large cog. Wrench rotation and either horizontal axle orientation are supported.
+- Disconnects power when the drive cog is removed or rotated out of alignment.
+- Moved the unchanged lantern down six pixels to preserve Create’s native roller/cog contact geometry. Belt/Depot placement stays at the same height; lens, beam and charge particles follow the lowered nozzle.
+- Updated the Ponder schematic, setup explanation, model preview and upgrade instructions.
+
+### Verification
+
+The build and all 27 dedicated-server GameTests passed, including the five new cog-drive regressions and all existing lens, belt/Depot, speed, redstone and conservation tests. The client model-wrapper check passed for both axes, retaining the lantern and 44 native controller rail quads through inventory, fixed-display and chunk render paths. The textured preview is a software render; graphical-client lighting and Ponder playback remain manual review items.
+
 ## 0.2.0
 
 - Rebuilt the emitter around Create Deco’s permitted industrial cage lantern, with an andesite drive cap, brass focusing bands, and a recessed optical cartridge. Credits are in `THIRD_PARTY_NOTICES.md`.

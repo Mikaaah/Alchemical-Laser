@@ -10,3 +10,5 @@ runs/
 .settings/
 .DS_Store
 Thumbs.db
+
+logs/

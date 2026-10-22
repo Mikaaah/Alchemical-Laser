@@ -16,3 +16,13 @@ These are third-party assets, used as a base with permission obtained and suppli
 by Mikaaah for this mod. Their original authors retain all rights. This repository's
 license does not relicense those assets or grant permission to reuse them elsewhere.
 Create Deco is not required at runtime; no Create Deco code is bundled.
+
+# Create controller fittings
+
+Copyright (c) The Create Team / The Creators of Create.
+
+The upper rails and textures are referenced from Create’s installed, baked Rotation Speed Controller model at client model bake time. The horizontal roller and large cogwheel also use Create’s own runtime models. No Create model JSON, textures or original Java code are redistributed by this addon. The render selects only the upper rails and combines their baked quads with the lantern body, including in inventory and after resource reload.
+
+Source project and asset license: https://github.com/Creators-of-Create/Create/blob/mc1.21.1/dev/LICENSE.md
+
+Create’s assets remain All Rights Reserved and retain their original ownership. The addon’s license does not relicense them.

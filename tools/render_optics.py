@@ -21,17 +21,17 @@ for key,value in model['textures'].items():
     else: im=Image.open(a/('textures/'+path+'.png'))
     textures[key]=np.array(im.convert('RGBA'))
 
-W,H=1100,760
+W,H=1100,1050
 canvas=np.zeros((H,W,3),dtype=float);canvas[:]=[37,36,38]
 depth=np.full((H,W),-1e10)
 eye=np.array([.8,.65,1.0]);eye/=np.linalg.norm(eye)
 right=np.cross([0,1,0],eye);right/=np.linalg.norm(right)
 up=np.cross(eye,right)
-scale=25
+scale=18
 
 def project(p):
-    p=np.array(p)-[8,8,8]
-    return np.array([550+p@right*scale,350-p@up*scale,p@eye])
+    p=np.array(p)-[8,14,8]
+    return np.array([550+p@right*scale,520-p@up*scale,p@eye])
 
 def triangle(points,uvs,tex,shade):
     p=np.array([project(v) for v in points]);uvs=np.array(uvs)
@@ -53,7 +53,7 @@ def triangle(points,uvs,tex,shade):
     canvas[sl][mask]=pixels[:,:,:3][mask]*shade
     depth[sl][mask]=z[mask]
 
-def render_element(e,texture_map):
+def render_element(e,texture_map,transform=None):
     x,y,z=e['from'];X,Y,Z=e['to']
     faces={'north':([[X,Y,z],[x,Y,z],[x,y,z],[X,y,z]],[0,0,-1]),
            'south':([[x,Y,Z],[X,Y,Z],[X,y,Z],[x,y,Z]],[0,0,1]),
@@ -63,6 +63,16 @@ def render_element(e,texture_map):
            'down':([[x,y,Z],[X,y,Z],[X,y,z],[x,y,z]],[0,-1,0])}
     for face,fd in e['faces'].items():
         vertices,normal=faces[face]
+        vertices=np.array(vertices,dtype=float);normal=np.array(normal,dtype=float)
+        rotation=e.get('rotation',{})
+        if rotation.get('angle',0):
+            angle=math.radians(rotation['angle']);c,s=math.cos(angle),math.sin(angle)
+            matrix={'x':[[1,0,0],[0,c,-s],[0,s,c]],'y':[[c,0,s],[0,1,0],[-s,0,c]],'z':[[c,-s,0],[s,c,0],[0,0,1]]}[rotation['axis']]
+            matrix=np.array(matrix);origin=np.array(rotation['origin'])
+            vertices=(vertices-origin)@matrix.T+origin;normal=matrix@normal
+        if transform is not None:
+            matrix,offset=transform
+            vertices=vertices@matrix.T+offset;normal=matrix@normal
         if np.dot(normal,eye)<=0: continue
         u,v,U,V=fd.get('uv',[0,0,16,16]);uv=[[u,v],[U,v],[U,V],[u,V]]
         k=fd.get('rotation',0)//90;uv=uv[k:]+uv[:k]
@@ -72,14 +82,27 @@ def render_element(e,texture_map):
             triangle([vertices[i] for i in ids],[uv[i] for i in ids],tex,shade)
 
 for e in model['elements']:render_element(e,textures)
-# The runtime top drive and a short length of connected shaft above it.
+# The client wrapper references these already-baked Create top rails at runtime.
+controller=json.loads(create.read('assets/create/models/block/rotation_speed_controller/block.json'))
+import io
+controller_textures={k:np.array(Image.open(io.BytesIO(create.read('assets/create/textures/'+v.split(':')[1]+'.png'))).convert('RGBA')) for k,v in controller['textures'].items()}
+for index in [7,9,10,11]:render_element(controller['elements'][index],controller_textures)
+
+# Native horizontal controller roller; model axis Y is rotated to Z.
 import io, copy
 shaftmodel=json.loads(create.read('assets/create/models/block/shaft.json'))
 shafttextures={k:np.array(Image.open(io.BytesIO(create.read('assets/create/textures/'+v.split(':')[1]+'.png'))).convert('RGBA')) for k,v in shaftmodel['textures'].items()}
-for base,height in [(12,.25),(16,.2)]:
-    for original in shaftmodel['elements']:
-        e=copy.deepcopy(original);e['from'][1]=base+e['from'][1]*height;e['to'][1]=base+e['to'][1]*height
-        render_element(e,shafttextures)
+matrix=np.array([[1,0,0],[0,0,-1],[0,1,0]])
+for e in shaftmodel['elements']: render_element(e,shafttextures,(matrix,np.array([0,16,0])))
+# A separately placed, native Create large cogwheel above, with its axle along X.
+cogmodel=json.loads(create.read('assets/create/models/block/large_cogwheel.json'))
+cogtextures={}
+for k,v in cogmodel['textures'].items():
+    if ':' not in v: v='minecraft:'+v
+    ns,path=v.split(':')
+    if ns=='create': cogtextures[k]=np.array(Image.open(io.BytesIO(create.read('assets/create/textures/'+path+'.png'))).convert('RGBA'))
+matrix=np.array([[0,1,0],[-1,0,0],[0,0,1]])
+for e in cogmodel['elements']:render_element(e,cogtextures,(matrix,np.array([0,32,0])))
 # A mounted Eclipse cartridge, transformed exactly like the block-entity renderer.
 lensmodel=json.loads((a/'models/item/eclipse_lens.json').read_text())
 lensmap={}
@@ -87,14 +110,14 @@ for k,v in lensmodel['textures'].items(): lensmap[k]=np.array(Image.open(a/('tex
 for original in lensmodel['elements']:
     e=copy.deepcopy(original)
     for field in ['from','to']:
-        e[field]=[(value-8)*.46+(1.04 if axis==1 else 8) for axis,value in enumerate(e[field])]
+        e[field]=[(value-8)*.46+(-4.96 if axis==1 else 8) for axis,value in enumerate(e[field])]
     render_element(e,lensmap)
 out=Image.fromarray(np.clip(canvas,0,255).astype('uint8'))
 d=ImageDraw.Draw(out)
-d.text((35,25),'CREATE: ALCHEMICAL LASERS / 0.2.0',fill='#e3c98e',font_size=24)
-d.text((35,63),'Industrial lantern optics · overhead shaft · fitted lens socket',fill='#b4ada1',font_size=18)
+d.text((35,25),'CREATE: ALCHEMICAL LASERS / 0.2.1',fill='#e3c98e',font_size=24)
+d.text((35,63),'Create controller top · large cog drive · industrial lantern optics',fill='#b4ada1',font_size=18)
 for i,name in enumerate(['red','blue','purple','white','growth','convergence','splitting','power','eclipse']):
     lens=Image.open(a/f'textures/item/{name}_lens.png').resize((48,48),Image.Resampling.NEAREST)
-    x=110+i*100;out.paste(lens,(x,640),lens);d.text((x-12,700),name.title(),fill='#d4c9b7',font_size=13)
-d.text((35,735),'Resource model inspection - actual model and textures; lighting differs in-game.',fill='#88827a',font_size=13)
+    x=110+i*100;out.paste(lens,(x,910),lens);d.text((x-12,970),name.title(),fill='#d4c9b7',font_size=13)
+d.text((35,1020),'Actual model and textures; large cogwheel placed above. Lighting differs in-game.',fill='#88827a',font_size=13)
 out.save(sys.argv[2])

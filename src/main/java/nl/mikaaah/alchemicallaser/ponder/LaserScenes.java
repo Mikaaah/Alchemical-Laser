@@ -37,7 +37,7 @@ public class LaserScenes {
         s.world().setBlock(BELT,AllBlocks.DEPOT.getDefaultState(),true);
         text(s,u,"A Depot works at the same height. Funnels and hoppers can supply and extract items.",BELT);
         s.world().showSection(u.select().position(LASER.above()),Direction.NORTH);
-        text(s,u,"Connect a vertical shaft to the top drive. The underside stays clear for the focusing lens and beam.",LASER.above());
+        text(s,u,"Place a large cogwheel directly above the emitter, with its axle across the top channel, like a Rotation Speed Controller.",LASER.above());
         s.markAsFinished();
     }
     public static void power(SceneBuilder b, SceneBuildingUtil u) {
