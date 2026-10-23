@@ -3,7 +3,7 @@
   "ingredient": {
     "item": "minecraft:magma_block"
   },
-  "lens": "alchemicallaser:blue_lens",
+  "lens": "alchemicallaser:convergence_lens",
   "result": {
     "id": "minecraft:obsidian"
   },

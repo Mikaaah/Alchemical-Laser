@@ -11,8 +11,7 @@ import nbtlib as n
 ROOT = Path(__file__).resolve().parents[1]
 R = ROOT / 'src/main/resources'
 A = R / 'assets/alchemicallaser'
-COLORS = {'red': 0xee6559, 'blue': 0x69bfe3, 'purple': 0xb895e5, 'white': 0xeee4ba,
-          'growth': 0x86c65b, 'convergence': 0xf0b65d, 'splitting': 0x65d6d1,
+COLORS = {'growth': 0x86c65b, 'convergence': 0xf0b65d, 'splitting': 0x65d6d1,
           'power': 0xe77e47, 'eclipse': 0xa286dc}
 
 def js(path, data):
@@ -150,12 +149,12 @@ for name, rgb in COLORS.items():
                   'thirdperson_righthand':{'rotation':[60,0,0],'translation':[0,2,0],'scale':[.5,.5,.5]}}})
 
 values = {f'alchemicallaser:{key}_lens': {'color':rgb,'pitch':pitch} for (key,rgb),pitch in
-          zip(COLORS.items(),[.8,1.2,.95,1.05,1.15,.9,1.3,.7,.6])}
+          zip(COLORS.items(),[1.15,.9,1.3,.7,.6])}
 js(R/'data/alchemicallaser/data_maps/item/laser_lenses.json', {'values':values})
 
 lang = json.loads((A/'lang/en_us.json').read_text())
 for name in COLORS:
-    lang[f'item.alchemicallaser.{name}_lens'] = name.title()+ (' Optical Lens' if name in ['red','blue','purple','white'] else ' Lens')
+    lang[f'item.alchemicallaser.{name}_lens'] = name.title()+' Lens'
 scenes = (ROOT/'src/main/java/nl/mikaaah/alchemicallaser/ponder/LaserScenes.java').read_text()
 for method in re.split(r'public static void ',scenes)[1:]:
     title = re.search(r'base\(b,u,"([^"]+)","([^"]+)"\)',method)
@@ -186,6 +185,14 @@ for name,src,count,out,amount,lens,duration,rpm in examples:
        'ingredient':{'item':'minecraft:'+src}, 'input_count':count, 'lens':f'alchemicallaser:{lens}_lens',
        'result':{'id':'minecraft:'+out,'count':amount}, 'duration':duration,'minimum_rpm':rpm})
 
+for name,src,out,lens,duration in [('sand_to_glass','sand','glass','power',100),
+        ('clay_to_brick','clay_ball','brick','power',80),('magma_to_obsidian','magma_block','obsidian','convergence',160),
+        ('amethyst_to_quartz','amethyst_shard','quartz','splitting',120),
+        ('quartz_to_prismarine','quartz','prismarine_crystals','eclipse',180)]:
+    js(R/f'data/alchemicallaser/recipe/{name}.json',{'type':'alchemicallaser:laser_processing',
+       'ingredient':{'item':'minecraft:'+src},'lens':f'alchemicallaser:{lens}_lens',
+       'result':{'id':'minecraft:'+out},'duration':duration,'minimum_rpm':16})
+
 # Move tutorial drive shafts beside the emitters, along their horizontal Z axes.
 p = A/'ponder/laser_workshop.nbt'; structure = n.load(p)
 for b in structure['blocks']:
@@ -196,4 +203,4 @@ for b in structure['blocks']:
         b['pos'][1] = n.Int(3); b['pos'][2] = n.Int(4)
         if 'nbt' in b: b['nbt']['id']=n.String('create:shaft')
 structure.save(p)
-print('Rebuilt brass side-drive laser, nine optics and side-shaft Ponder setup.')
+print('Rebuilt brass side-drive laser, five optics and side-shaft Ponder setup.')

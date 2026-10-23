@@ -99,10 +99,10 @@ for original in lensmodel['elements']:
     render_element(e,lensmap)
 out=Image.fromarray(np.clip(canvas,0,255).astype('uint8'))
 d=ImageDraw.Draw(out)
-d.text((35,25),'CREATE: ALCHEMICAL LASERS / 0.2.2',fill='#e3c98e',font_size=24)
+d.text((35,25),'CREATE: ALCHEMICAL LASERS / 0.3.0',fill='#e3c98e',font_size=24)
 d.text((35,63),'Brass housing · side shaft drive · industrial lantern optics',fill='#b4ada1',font_size=18)
-for i,name in enumerate(['red','blue','purple','white','growth','convergence','splitting','power','eclipse']):
+for i,name in enumerate(['growth','convergence','splitting','power','eclipse']):
     lens=Image.open(a/f'textures/item/{name}_lens.png').resize((48,48),Image.Resampling.NEAREST)
-    x=110+i*100;out.paste(lens,(x,640),lens);d.text((x-12,700),name.title(),fill='#d4c9b7',font_size=13)
+    x=230+i*150;out.paste(lens,(x,640),lens);d.text((x-12,700),name.title(),fill='#d4c9b7',font_size=13)
 d.text((35,735),'Actual model and textures; lighting differs in-game.',fill='#88827a',font_size=13)
 out.save(sys.argv[2])

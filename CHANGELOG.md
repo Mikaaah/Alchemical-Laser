@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.3.0
+
+- Process every complete recipe quantity in a held stack in one cycle, on Mechanical Belts and Depots. Incomplete quantities remain, outputs split into legal stack sizes, and secondary chances roll independently per recipe operation.
+- Added bulk processing for multiple dropped item stacks directly under the nozzle. Inputs stay intact until completion; moving the stack, changing the lens, power loss, redstone and obstructions cancel unfinished work.
+- Replaced the custom laser tube with Minecraft’s native animated beacon core and halo, colored by the installed lens’s synced RGB data. Retained the brass housing, industrial lantern and horizontal side shaft.
+- Kept only Growth, Convergence, Splitting, Power and Eclipse lenses. Removed Red, Blue, Purple and White items, recipes, models, textures and translations. Their starter transformations now use Power, Convergence, Splitting and Eclipse respectively. Replace old colored lenses before upgrading a world.
+- Updated Ponder tutorials, asset generators, model preview and recipe documentation for the five-lens bulk system.
+
+### Verification
+
+The Gradle build and all 38 dedicated-server GameTests passed on Minecraft 1.21.1, NeoForge 21.1.219 and Create 6.0.10-280. Coverage includes 64-item belt/Depot cycles, counted-input remainders, 256-item splitting outputs, independent secondary chances and copied components, multiple dropped stacks with normal gravity, interruptions, moved items, obstructions and restart, all five lenses and the existing kinetic regressions. Resource validation and a packaged-JAR audit passed: exactly five lens models and no removed color-lens or custom beam assets. Native beacon rendering compiles against the vanilla API; graphical-client review remains manual.
+
 ## 0.2.2
 
 - Replaced the controller top with a compact solid brass housing, matching the retained industrial lantern. Added steel collars around the existing horizontal axle.

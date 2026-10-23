@@ -13,6 +13,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -39,6 +40,14 @@ public class LaserBlockEntity extends KineticBlockEntity {
     private TransportedItemStack target;
     private long lastCallback = -100, lastAdvance = -100, nextLookup;
     private Object soundInstance;
+    private final Map<UUID, LooseCycle> looseCycles = new HashMap<>();
+    private static final class LooseCycle {
+        final RecipeHolder<LaserRecipe> recipe;
+        final ItemStack input;
+        int charge;
+        float progress;
+        LooseCycle(RecipeHolder<LaserRecipe> recipe, ItemStack input) { this.recipe = recipe; this.input = input.copy(); }
+    }
     public LaserBlockEntity(BlockPos pos, BlockState state) { super(AlchemicalLaser.LASER_ENTITY.get(), pos, state); }
     @Override public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         super.addBehaviours(behaviours);
@@ -58,7 +67,7 @@ public class LaserBlockEntity extends KineticBlockEntity {
     }
     public void resetCycle() {
         if (level != null && !level.isClientSide && (phase == Phase.CHARGING || phase == Phase.PROCESSING)) sound("shutdown", .25f, lensPitch());
-        target = null; cycleInput = ItemStack.EMPTY; progress = 0; charge = 0;
+        target = null; cycleInput = ItemStack.EMPTY; progress = 0; charge = 0; looseCycles.clear();
         if (phase != Phase.IDLE) { phase = Phase.IDLE; if (level != null && !level.isClientSide) sendData(); }
     }
     private RecipeHolder<LaserRecipe> recipe(ItemStack input) {
@@ -78,6 +87,7 @@ public class LaserBlockEntity extends KineticBlockEntity {
         var found = recipe(stack.stack);
         if (target != null && previousRecipe != found) resetCycle();
         if (lens().isEmpty() || found == null) { resetCycle(); return ProcessingResult.PASS; }
+        if (!looseCycles.isEmpty()) resetCycle();
         if (target != null && target != stack) resetCycle();
         if (target == null || !ItemStack.matches(cycleInput, stack.stack)) {
             target = stack; cycleInput = stack.stack.copy(); progress = 0; charge = 0;
@@ -98,15 +108,16 @@ public class LaserBlockEntity extends KineticBlockEntity {
         progress += Math.min(Math.abs(getSpeed()), LaserConfig.MAX_RPM.get()) / 32f;
         if (level.getGameTime() % 8 == 0) sendData();
         if (progress < found.value().duration()) return ProcessingResult.HOLD;
-        // Read-only checks above. Exactly one recipe quantity is committed here through Create's transport handler.
+        // Commit every complete recipe quantity in the held stack, in one cycle.
+        var batch = found.value().rollBatch(stack.stack, level.random);
         List<TransportedItemStack> results = new ArrayList<>();
-        for (ItemStack out : found.value().roll(stack.stack, level.random)) {
+        for (ItemStack out : batch.outputs()) {
             while (!out.isEmpty()) {
                 TransportedItemStack t = stack.copy(); t.stack = out.split(Math.min(out.getCount(), out.getMaxStackSize()));
                 t.locked = false; t.clearFanProcessingData(); results.add(t);
             }
         }
-        TransportedItemStack remainder = stack.copy(); remainder.stack.shrink(found.value().inputCount());
+        TransportedItemStack remainder = stack.copy(); remainder.stack.shrink(batch.consumed());
         remainder.locked = false;
         if (remainder.stack.isEmpty()) handler.handleProcessingOnItem(stack, TransportedResult.convertTo(results));
         else handler.handleProcessingOnItem(stack, TransportedResult.convertToAndLeaveHeld(results, remainder));
@@ -119,7 +130,8 @@ public class LaserBlockEntity extends KineticBlockEntity {
     public float lensPitch() {
         LensDefinition definition=lens().getItemHolder().getData(LensDefinition.TYPE);
         if(definition!=null)return definition.pitch();
-        return switch (AlchemicalLaser.lensName(lens())) { case "red" -> .8f; case "blue" -> 1.2f; case "purple" -> .95f; default -> 1.05f; }; }
+        return switch (AlchemicalLaser.lensName(lens())) { case "growth" -> 1.15f; case "convergence" -> .9f;
+            case "splitting" -> 1.3f; case "power" -> .7f; case "eclipse" -> .6f; default -> 1f; }; }
     private void sound(String name, float volume, float pitch) {
         if (level != null && !level.isClientSide) level.playSound(null, worldPosition, AlchemicalLaser.AUDIO.get(name).get(),
             SoundSource.BLOCKS, volume * LaserConfig.SOUND_VOLUME.get().floatValue(), pitch);
@@ -130,9 +142,64 @@ public class LaserBlockEntity extends KineticBlockEntity {
             nl.mikaaah.alchemicallaser.client.LaserEffects.tick(this);
             return;
         }
-        if (phase != Phase.IDLE && (!hasPower() || level.getGameTime() - lastCallback > 2)) {
-            resetCycle();
+        if (!hasPower() || lens().isEmpty()) { resetCycle(); return; }
+        if (target != null && level.getGameTime() - lastCallback <= 2) return;
+        if (target != null) resetCycle();
+        tickLooseItems();
+    }
+    private void tickLooseItems() {
+        // The hanging lantern occupies the upper part of this air gap. Never fire through an obstruction.
+        BlockPos gap = worldPosition.below();
+        if (!level.getBlockState(gap).getCollisionShape(level, gap).isEmpty()) { resetCycle(); return; }
+        if (looseCycles.isEmpty() && level.getGameTime() % 5 != 0) {
+            if (level.getGameTime() - lastCallback > 2 && phase != Phase.IDLE) resetCycle();
+            return;
         }
+        double x = worldPosition.getX(), y = worldPosition.getY(), z = worldPosition.getZ();
+        var items = level.getEntitiesOfClass(ItemEntity.class, new AABB(x+.2,y-1.25,z+.2,x+.8,y-.35,z+.8),
+            entity -> entity.isAlive() && !entity.getItem().isEmpty());
+        Set<UUID> present = new HashSet<>();
+        boolean processing = false, charging = false, completed = false;
+        for (ItemEntity item : items) {
+            var input = item.getItem();
+            var found = recipe(input);
+            if (found == null || Math.abs(getSpeed()) < found.value().minimumRpm()) continue;
+            UUID id = item.getUUID(); present.add(id);
+            LooseCycle cycle = looseCycles.get(id);
+            if (cycle == null || cycle.recipe != found || !ItemStack.matches(cycle.input, input)) {
+                cycle = new LooseCycle(found, input); looseCycles.put(id, cycle);
+            }
+            if (cycle.charge < LaserConfig.CHARGE_TICKS.get()) {
+                cycle.charge++; charging = true; continue;
+            }
+            cycle.progress += Math.min(Math.abs(getSpeed()), LaserConfig.MAX_RPM.get()) / 32f;
+            if (cycle.progress < found.value().duration()) { processing = true; continue; }
+            var batch = found.value().rollBatch(input, level.random);
+            List<ItemEntity> outputs = new ArrayList<>();
+            boolean spawned = true;
+            for (ItemStack out : batch.outputs()) {
+                var entity = new ItemEntity(level, item.getX(), item.getY(), item.getZ(), out);
+                entity.setDeltaMovement(item.getDeltaMovement()); entity.setDefaultPickUpDelay();
+                if (!level.addFreshEntity(entity)) { spawned = false; break; }
+                outputs.add(entity);
+            }
+            if (!spawned) { outputs.forEach(ItemEntity::discard); continue; }
+            if (batch.consumed() == input.getCount()) item.discard();
+            else item.setItem(input.copyWithCount(input.getCount() - batch.consumed()));
+            looseCycles.remove(id); completed = true;
+        }
+        looseCycles.keySet().retainAll(present);
+        if (completed) {
+            sound("complete", .4f, lensPitch()); level.blockEvent(worldPosition, getBlockState().getBlock(), 1, 0); setChanged();
+        }
+        if (processing) {
+            if (phase != Phase.PROCESSING) sound("fire", .45f, lensPitch());
+            setPhase(Phase.PROCESSING);
+        } else if (charging) {
+            if (phase != Phase.CHARGING) { sound("activation", .35f, .9f); sound("charge", .45f, lensPitch()); }
+            setPhase(Phase.CHARGING);
+        } else if (completed) setPhase(Phase.COMPLETING);
+        else if (level.getGameTime() - lastCallback > 2) resetCycle();
     }
     @Override protected void write(CompoundTag tag, HolderLookup.Provider registries, boolean clientPacket) {
         super.write(tag, registries, clientPacket);

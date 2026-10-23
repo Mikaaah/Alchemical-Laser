@@ -3,7 +3,7 @@
   "ingredient": {
     "item": "minecraft:clay_ball"
   },
-  "lens": "alchemicallaser:red_lens",
+  "lens": "alchemicallaser:power_lens",
   "result": {
     "id": "minecraft:brick"
   },

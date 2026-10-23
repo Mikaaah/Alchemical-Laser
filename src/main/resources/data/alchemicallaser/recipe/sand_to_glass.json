@@ -3,7 +3,7 @@
   "ingredient": {
     "item": "minecraft:sand"
   },
-  "lens": "alchemicallaser:red_lens",
+  "lens": "alchemicallaser:power_lens",
   "result": {
     "id": "minecraft:glass"
   },

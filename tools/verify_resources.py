@@ -31,3 +31,17 @@ for file in (root/'src/main/java').rglob('*.java'):
     for key in re.findall(r'Component.translatable\("([^"\n]+)"',file.read_text()):
         if not key.endswith('.') and key.startswith(('goggles.alchemicallaser.','recipe.alchemicallaser.','itemGroup.')):assert key in lang,(file,key)
 print('Static translation references passed.')
+
+expected={f'alchemicallaser:{name}_lens' for name in ('growth','convergence','splitting','power','eclipse')}
+lenses=json.loads((r/'data/alchemicallaser/data_maps/item/laser_lenses.json').read_text())['values']
+assert set(lenses)==expected,'Expected exactly the five named lenses'
+for lens in expected:
+    name=lens.split(':')[1]
+    for path in (a/f'models/item/{name}.json',a/f'textures/item/{name}.png',r/f'data/alchemicallaser/recipe/{name}.json'):
+        assert path.is_file(),path
+for color in ('red','blue','purple','white'):
+    assert not list(r.rglob(f'{color}_lens.*')),color
+for path in (r/'data/alchemicallaser/recipe').glob('*.json'):
+    recipe=json.loads(path.read_text())
+    if recipe['type']=='alchemicallaser:laser_processing':assert recipe['lens'] in expected,path
+print('Five-lens registry assets and starter recipe references passed.')

@@ -1,6 +1,6 @@
 # Alchemical Laser — Development Plan
 
-This is the original 0.1.0 specification and implementation checklist. The optics updates add five specialist lenses, a permitted Create Deco lantern adaptation and, in 0.2.2, a brass housing with standard horizontal shaft connections; see the current README and changelog.
+This is the original 0.1.0 specification and implementation checklist. The optics updates add five specialist lenses, a permitted Create Deco lantern adaptation and, in 0.2.2, a brass housing with standard horizontal shaft connections; 0.3.0 keeps only those five lenses and adds bulk stack processing, dropped-item processing and native beacon rendering; see the current README and changelog.
 
 Implementation status is recorded below. Checked implementation tasks mean source/assets are present; unperformed release checks remain unchecked. See `CHANGELOG.md` for exact validation evidence.
 **Minecraft:** 1.21.1  

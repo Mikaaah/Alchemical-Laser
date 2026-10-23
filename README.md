@@ -2,9 +2,9 @@
 
 Kinetic laser processing for **Minecraft 1.21.1 • NeoForge • Create 6.0.10**.
 
-A single emitter processes items directly on Mechanical Belts and Depots. A caged industrial optical head hangs below a solid brass housing, powered through its horizontal side shaft. Nine reusable lenses select recipes and color the animated beam. Includes pixel-art optical cartridges, spatial audio and Create Ponder tutorials.
+A single emitter bulk-processes items on Mechanical Belts, Depots and the ground. A caged industrial optical head hangs below a solid brass housing, powered through its horizontal side shaft. Five reusable lenses select recipes and color a native beacon beam. Includes pixel-art optical cartridges, spatial audio and Create Ponder tutorials.
 
-![Industrial laser model and nine optical lenses](docs/images/optics-0.2.2.png)
+![Industrial laser model and five optical lenses](docs/images/optics-0.3.0.png)
 
 ## How it works
 
@@ -17,8 +17,8 @@ Speed scales processing time, up to the configured cap. A powered redstone signa
 
 ## Features
 
-- Native Create belt and Depot processing, including counted inputs and retained stack remainders.
-- Nine reusable lenses with fitted 3D cartridges, colored continuous beams, charging particles and completion effects.
+- Bulk processing on belts and Depots, plus multiple dropped item stacks directly beneath the beam. Complete recipe quantities process together; incomplete remainders stay behind.
+- Five reusable lenses with fitted 3D cartridges, animated Minecraft beacon beams, charging particles and completion effects.
 - Industrial lantern adapted from Create Deco with permission, paired with a brass housing using Create’s brass texture; see [credits](THIRD_PARTY_NOTICES.md).
 - Seven original sound events, including a spatial beam loop that stops when processing stops or the machine unloads.
 - Engineer's Goggles information, Create wrench interaction and a one-slot lens item capability for automation.
@@ -30,11 +30,11 @@ Speed scales processing time, up to the configured cap. A powered redstone signa
 
 | Lens | Input | Output |
 |---|---|---|
-| Red | Sand | Glass |
-| Red | Clay ball | Brick |
-| Blue | Magma block | Obsidian |
-| Purple | Amethyst shard | Quartz |
-| White | Quartz | Prismarine crystals |
+| Power | Sand | Glass |
+| Power | Clay ball | Brick |
+| Convergence | Magma block | Obsidian |
+| Splitting | Amethyst shard | Quartz |
+| Eclipse | Quartz | Prismarine crystals |
 | Growth | Wheat seeds | Wheat |
 | Convergence | 4 amethyst shards | Amethyst block |
 | Splitting | Amethyst block | 4 amethyst shards |
@@ -49,8 +49,10 @@ These are standalone examples. Modpacks can replace them with their own progress
 
 Minecraft 1.21.1, Java 21, NeoForge 21.1.219 or newer, and Create 6.0.10 (6.0.x). Use Create's required matching dependencies. JEI, EMI and KubeJS are optional.
 
-Version **0.1.0** is the first implementation. See [release notes](CHANGELOG.md) for the verification status and remaining manual checks.
+Current release: **0.3.0**. See [release notes](CHANGELOG.md) for the verification status and remaining manual checks.
 
-The specialist lenses are recipe selectors. Their starter recipes demonstrate growth, consolidation, splitting, energizing and sculk processing; datapacks and KubeJS can replace them. Power recipes require 64 RPM and the Eclipse example requires 128 RPM.
+The specialist lenses are recipe selectors. Their starter recipes demonstrate growth, consolidation, splitting, energizing and sculk processing; datapacks and KubeJS can replace them. The obsidian Power recipe requires 64 RPM and the Eclipse example requires 128 RPM.
 
-**Updating from 0.2.0 or 0.2.1:** connect power to either horizontal shaft end. The top no longer accepts a shaft or large cog drive. Belt/Depot height and the lantern position stay the same; all existing item IDs and recipes are preserved.
+**Updating from 0.2.0 or 0.2.1:** connect power to either horizontal shaft end. The top no longer accepts a shaft or large cog drive. Belt/Depot height and the lantern position stay the same; the five named lenses retain their item IDs.
+
+**Updating to 0.3.0:** Red, Blue, Purple and White lenses have been removed. Replace them with Power, Convergence, Splitting and Eclipse respectively; the earlier starter transformations now use those lenses. Removed lens items cannot be recovered after loading an old world.

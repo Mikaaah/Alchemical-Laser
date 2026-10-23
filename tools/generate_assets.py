@@ -10,7 +10,7 @@ def js(path,data):
     path.parent.mkdir(parents=True,exist_ok=True); path.write_text(json.dumps(data,indent=2)+'\n')
 def img(path,im):
     path.parent.mkdir(parents=True,exist_ok=True); im.save(path)
-colors={'red':(255,83,80),'blue':(72,202,255),'purple':(188,108,255),'white':(255,243,197)}
+colors={'growth':(134,198,91),'convergence':(240,182,93),'splitting':(101,214,209),'power':(231,126,71),'eclipse':(162,134,220)}
 # Original 16px Create-inspired metal and brass housing tiles, kept separate from Create assets.
 for name,base in {'housing':(82,91,91),'brass':(181,137,70),'vent':(50,58,58),'trim':(111,123,119)}.items():
     im=Image.new('RGBA',(16,16),(*base,255)); d=ImageDraw.Draw(im); rng=random.Random(79)
@@ -44,10 +44,6 @@ cub([3,8,.8],[13,12,1],'vent');cub([3,8,15],[13,12,15.2],'vent')
 js(A/'models/block/laser_emitter.json',{'parent':'minecraft:block/block','textures':{k:f'alchemicallaser:block/{k}' for k in ['housing','brass','vent','trim']}|{'particle':'alchemicallaser:block/housing'},'elements':elements})
 js(A/'blockstates/laser_emitter.json',{'variants':{f'facing={d}':{'model':'alchemicallaser:block/laser_emitter','y':v} for d,v in [('north',0),('east',90),('south',180),('west',270)]}})
 js(A/'models/item/laser_emitter.json',{'parent':'alchemicallaser:block/laser_emitter'})
-im=Image.new('RGBA',(16,32));d=ImageDraw.Draw(im)
-for y in range(32):
-    k=int(210+45*math.sin(y*math.pi/8));d.line((0,y,15,y),fill=(k,k,k,255))
-img(A/'textures/effect/beam.png',im)
 js(R/'pack.mcmeta',{'pack':{'pack_format':34,'description':'Create: Alchemical Lasers resources'}})
 lang={'itemGroup.alchemicallaser':'Alchemical Lasers','block.alchemicallaser.laser_emitter':'Alchemical Laser Emitter',
       'goggles.alchemicallaser.lens':'Lens: %s','goggles.alchemicallaser.none':'None',
@@ -69,15 +65,13 @@ lang['alchemicallaser.ponder.tag.laser_processing']='Alchemical Lasers'
 lang['alchemicallaser.ponder.tag.laser_processing.description']='Kinetic processing with interchangeable optical lenses'
 lang['emi.category.alchemicallaser.laser_processing']='Alchemical Laser Processing'
 js(A/'lang/en_us.json',lang)
-js(R/'data/alchemicallaser/data_maps/item/laser_lenses.json',{'values':{f'alchemicallaser:{key}_lens':{'color':(rgb[0]<<16)|(rgb[1]<<8)|rgb[2],'pitch':{'red':.8,'blue':1.2,'purple':.95,'white':1.05}[key]} for key,rgb in colors.items()}})
+js(R/'data/alchemicallaser/data_maps/item/laser_lenses.json',{'values':{f'alchemicallaser:{key}_lens':{'color':(rgb[0]<<16)|(rgb[1]<<8)|rgb[2],'pitch':{'growth':1.15,'convergence':.9,'splitting':1.3,'power':.7,'eclipse':.6}[key]} for key,rgb in colors.items()}})
 # Survival crafting and a modest standalone set of transformations. Custom pack recipes can replace these.
 def shaped(name,pattern,key,result,count=1):js(R/f'data/alchemicallaser/recipe/{name}.json',{'type':'minecraft:crafting_shaped','pattern':pattern,'key':{k:{'item':v} for k,v in key.items()},'result':{'id':result,'count':count}})
 shaped('laser_emitter',['BSB','CEC',' G '],{'B':'create:brass_ingot','S':'create:shaft','C':'create:andesite_casing','E':'create:electron_tube','G':'minecraft:glass'},'alchemicallaser:laser_emitter')
-for c,dye in [('red','red_dye'),('blue','blue_dye'),('purple','purple_dye'),('white','white_dye')]:
-    shaped(c+'_lens',[' B ','GDG',' B '],{'B':'create:brass_nugget','G':'minecraft:glass','D':'minecraft:'+dye},'alchemicallaser:'+c+'_lens')
-for name,item,out,lens,t in [('sand_to_glass','sand','glass','red',100),('clay_to_brick','clay_ball','brick','red',80),
-                           ('magma_to_obsidian','magma_block','obsidian','blue',160),('amethyst_to_quartz','amethyst_shard','quartz','purple',120),
-                           ('quartz_to_prismarine','quartz','prismarine_crystals','white',180)]:
+for name,item,out,lens,t in [('sand_to_glass','sand','glass','power',100),('clay_to_brick','clay_ball','brick','power',80),
+                           ('magma_to_obsidian','magma_block','obsidian','convergence',160),('amethyst_to_quartz','amethyst_shard','quartz','splitting',120),
+                           ('quartz_to_prismarine','quartz','prismarine_crystals','eclipse',180)]:
     js(R/f'data/alchemicallaser/recipe/{name}.json',{'type':'alchemicallaser:laser_processing','ingredient':{'item':'minecraft:'+item},'lens':'alchemicallaser:'+lens+'_lens','result':{'id':'minecraft:'+out},'duration':t,'minimum_rpm':16})
 js(R/'data/alchemicallaser/loot_table/blocks/laser_emitter.json',{'type':'minecraft:block','pools':[{'rolls':1,'entries':[{'type':'minecraft:item','name':'alchemicallaser:laser_emitter'}],'conditions':[{'condition':'minecraft:survives_explosion'}]}]})
 js(R/'data/minecraft/tags/block/mineable/pickaxe.json',{'replace':False,'values':['alchemicallaser:laser_emitter']})

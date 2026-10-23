@@ -49,6 +49,23 @@ public record LaserRecipe(Ingredient ingredient, int inputCount, ResourceLocatio
         if (secondary.isPresent() && random.nextFloat() < secondaryChance) outputs.add(secondary.get().copy());
         return outputs;
     }
+    public record Batch(int consumed, List<ItemStack> outputs) {}
+    public Batch rollBatch(ItemStack input, RandomSource random) {
+        int operations = input.getCount() / inputCount;
+        List<ItemStack> outputs = new ArrayList<>();
+        for (int operation = 0; operation < operations; operation++) {
+            for (ItemStack rolled : roll(input, random)) {
+                for (ItemStack existing : outputs) {
+                    if (rolled.isEmpty()) break;
+                    if (!ItemStack.isSameItemSameComponents(existing, rolled)) continue;
+                    int moved = Math.min(rolled.getCount(), existing.getMaxStackSize() - existing.getCount());
+                    existing.grow(moved); rolled.shrink(moved);
+                }
+                while (!rolled.isEmpty()) outputs.add(rolled.split(Math.min(rolled.getCount(), rolled.getMaxStackSize())));
+            }
+        }
+        return new Batch(operations * inputCount, outputs);
+    }
     @Override public ItemStack assemble(SingleRecipeInput input, HolderLookup.Provider registries) { return makeResult(input.item()); }
     @Override public boolean canCraftInDimensions(int width, int height) { return true; }
     @Override public ItemStack getResultItem(HolderLookup.Provider registries) { return result.copy(); }

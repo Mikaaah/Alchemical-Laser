@@ -3,7 +3,7 @@
   "ingredient": {
     "item": "minecraft:amethyst_shard"
   },
-  "lens": "alchemicallaser:purple_lens",
+  "lens": "alchemicallaser:splitting_lens",
   "result": {
     "id": "minecraft:quartz"
   },

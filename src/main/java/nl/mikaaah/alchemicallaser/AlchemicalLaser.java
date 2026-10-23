@@ -35,7 +35,7 @@ public final class AlchemicalLaser {
         BlockBehaviour.Properties.of().strength(3.5f).requiresCorrectToolForDrops().sound(SoundType.NETHERITE_BLOCK).noOcclusion()));
     public static final DeferredItem<BlockItem> EMITTER_ITEM = ITEMS.registerSimpleBlockItem(EMITTER);
     public static final Map<String, DeferredItem<Item>> LENSES = new LinkedHashMap<>();
-    static { for (String color : List.of("red", "blue", "purple", "white", "growth", "convergence", "splitting", "power", "eclipse"))
+    static { for (String color : List.of("growth", "convergence", "splitting", "power", "eclipse"))
         LENSES.put(color, ITEMS.registerSimpleItem(color + "_lens", new Item.Properties().stacksTo(1))); }
     public static final Supplier<BlockEntityType<LaserBlockEntity>> LASER_ENTITY = ENTITIES.register("laser_emitter",
         () -> BlockEntityType.Builder.of(LaserBlockEntity::new, EMITTER.get()).build(null));
@@ -68,8 +68,7 @@ public final class AlchemicalLaser {
     public static int lensColor(ItemStack stack) {
         LensDefinition definition=stack.getItemHolder().getData(LensDefinition.TYPE);
         if(definition!=null)return definition.color();
-        return switch (lensName(stack)) { case "red" -> 0xff5350; case "blue" -> 0x48caff;
-            case "purple" -> 0xbc6cff; case "white" -> 0xfff3c5; case "growth" -> 0x86c65b;
+        return switch (lensName(stack)) { case "growth" -> 0x86c65b;
             case "convergence" -> 0xf0b65d; case "splitting" -> 0x65d6d1; case "power" -> 0xe77e47;
             case "eclipse" -> 0xa286dc; default -> 0x666b70; };
     }

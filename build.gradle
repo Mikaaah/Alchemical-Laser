@@ -2,7 +2,7 @@ plugins {
     id 'java-library'
     id 'net.neoforged.moddev' version '2.0.148'
 }
-version = '0.2.2'
+version = '0.3.0'
 group = 'nl.mikaaah.alchemicallaser'
 base { archivesName = 'create-alchemical-lasers' }
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)

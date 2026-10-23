@@ -3,7 +3,7 @@
   "ingredient": {
     "item": "minecraft:quartz"
   },
-  "lens": "alchemicallaser:white_lens",
+  "lens": "alchemicallaser:eclipse_lens",
   "result": {
     "id": "minecraft:prismarine_crystals"
   },
